@@ -13,13 +13,13 @@ $(window).scroll(function() {
 
 // jQuery for page scrolling feature - requires jQuery Easing plugin
 $(function() {
-    $('a.page-scroll').bind('click', function(event) {
-        var $anchor = $(this);
-        $('html, body').stop().animate({
-            scrollTop: $($anchor.attr('href')).offset().top
-        }, 500, 'easeInOutExpo');
-        event.preventDefault();
-    });
+    // $('a.page-scroll').bind('click', function(event) {
+    //     var $anchor = $(this);
+    //     $('html, body').stop().animate({
+    //         scrollTop: $($anchor.attr('href')).offset().top
+    //     }, 500, 'easeInOutExpo');
+    //     event.preventDefault();
+    // });
 
   var engine = new Bloodhound({
     name: 'sources',
@@ -39,6 +39,9 @@ $(function() {
       source: engine.ttAdapter()
     },
     freeInput: false
+  });
+  engine.local.forEach(function(tag) {
+    $('input:eq(0)').tagsinput('add', tag.name);
   });
 
 });
@@ -64,11 +67,14 @@ var AppRouter = Backbone.Router.extend ({
       $('section').hide();
       $('.navbar-nav li').hide();
       $('.navbar-nav li:eq(0)').show();
+      $('.selected').removeClass('selected');
     },
     'sources': function () {
       if(!started) {this.navigate('',{trigger:true});return;}
       // Sources route
       $('section#sources').show();
+      $('.navbar-nav li').hide();
+      $('.navbar-nav li:eq(0)').show();
       $('.navbar-nav li:eq(1)').show();
       goToSection();
     },
