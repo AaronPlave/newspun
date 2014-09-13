@@ -19,5 +19,4 @@ def process(collection_item):
   words = frequency.all_word_count(text)
   common_words = frequency.most_common(text)
   readability = GunningFog.count(text)
-  setament = sentament_analysis.analyze_get_score(text,False)
-
+  sentament = sentament_analysis.analyze_get_score(text,False)
