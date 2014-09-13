@@ -1,5 +1,7 @@
 from flask import Flask
 from flask import render_template
+from lib.media_lib import media 
+
 # from lib.menu.menu import menu
 # from lib.ratings.ratings import ratings
 # from lib.order.order import order
