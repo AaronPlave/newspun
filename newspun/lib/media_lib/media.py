@@ -4,6 +4,8 @@ import feedparser
 import re
 import time
 import datetime
+import request
+from BeautifulSoup import BeautifulSoup
 
 client = MongoClient()
 db = client.newspindb
@@ -93,3 +95,27 @@ class HuffingtonPost():
 		        	break
 		        else:
 					db.text.insert(a)
+
+class CNN():
+	def __init__(self,default_categories):
+		self.name = "CNN"
+		self.default_categories = default_categories
+		self.articles=[]
+		self.categories = {
+			'Economics':"http://rss.cnn.com/rss/money_latest.rss",
+			'Entertainment':"http://rss.cnn.com/rss/cnn_showbiz.rss",
+			"Politics":"http://rss.cnn.com/rss/cnn_allpolitics.rss",
+			"Technology":"http://rss.cnn.com/rss/cnn_tech.rss",
+			"Travel":"http://rss.cnn.com/rss/cnn_travel.rss",
+			"World":"http://rss.cnn.com/rss/cnn_world.rss"
+		}
+
+	def fetch_articles(self):
+		"""
+		Fetches articles from each item in each RSS feed in 'categories'
+		"""
+		if not category in self.categories:
+			print "CNN does not have cat:",category
+			continue
+		response = requests.get(self.categories[category])
+
