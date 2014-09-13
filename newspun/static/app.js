@@ -48,3 +48,44 @@ $('.navbar-collapse ul li a').click(function() {
     $('.navbar-toggle:visible').click();
 });
 
+started = false;
+
+var goToSection = function () {
+  $('html, body').stop().animate({
+      scrollTop: $('#' + Backbone.history.fragment).offset().top
+  }, 500, 'easeInOutExpo');
+};
+
+var AppRouter = Backbone.Router.extend ({
+  routes: {
+    '': function () {
+      started = true;
+      // Intro route
+      $('section').hide();
+      $('.navbar-nav li').hide();
+      $('.navbar-nav li:eq(0)').show();
+    },
+    'sources': function () {
+      if(!started) {this.navigate('',{trigger:true});return;}
+      // Sources route
+      $('section#sources').show();
+      $('.navbar-nav li:eq(1)').show();
+      goToSection();
+    },
+    'graphs': function () {
+      if(!started) {this.navigate('',{trigger:true});return;}
+      // Graphs route
+      $('section#graphs').show();
+      $('.navbar-nav li:eq(2)').show();
+      goToSection();
+    },
+    '*x': function () {
+      this.navigate('', {trigger:true});
+    }
+  }
+});
+
+$(document).ready(function () {
+  var appRouter = new AppRouter();
+  Backbone.history.start();
+});

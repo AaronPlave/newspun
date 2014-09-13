@@ -159,7 +159,7 @@ a:focus {
     font-size: 18px;
 }
 
-.intro .list-group {
+.intro .list-group a {
   color: white;
   font-family: Montserrat;
 }
@@ -444,4 +444,17 @@ span.twitter-typeahead {
 }
 .input-group.input-group-sm span.twitter-typeahead .tt-dropdown-menu {
   top: 28px !important;
+}
+
+.btn-default:hover, .btn-default:focus {
+  border: 1px solid white;
+  outline: 0;
+  color: white;
+  background-color: rgba(255,255,255,0.5);
+}
+.btn-default {
+  border: 1px solid white;
+  outline: 0;
+  color: white;
+  background-color: rgba(255,255,255,0.3);
 }
