@@ -8,7 +8,7 @@ import request
 from BeautifulSoup import BeautifulSoup
 
 client = MongoClient()
-db = client.newspindb
+db = client.newspundb
 raw_text = db.text
 
 default_categories = ['Economics','Entertainment','Food',

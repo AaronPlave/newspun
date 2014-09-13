@@ -5,7 +5,7 @@ from flask import request
 from pymongo import MongoClient
 
 client = MongoClient()
-db = client.newspindb
+db = client.newspundb
 processed = db.processed
 
 analyze = Blueprint('analyze',__name__,template_folder = 'templates')
