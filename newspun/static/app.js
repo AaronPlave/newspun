@@ -89,6 +89,15 @@ var AppRouter = Backbone.Router.extend ({
       // Graphs route
       $('section#graphs').show();
       $('.navbar-nav li:eq(2)').show();
+
+      var type = $('header .selected').data('code');
+
+      $.getJSON('/static/sample_freq_data.json', function (data) {
+        frequency(data);
+      });
+
+
+
       goToSection();
     },
     '*x': function () {
