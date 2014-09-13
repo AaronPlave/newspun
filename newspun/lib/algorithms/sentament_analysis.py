@@ -1,5 +1,7 @@
 import re
-lib = {}
+import json
+json_data = open('../wordlist/words.json').read()
+lib = json.loads(json_data)
 class scored_words:
   def __init___(self):
     self.score
