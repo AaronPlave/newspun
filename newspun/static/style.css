@@ -164,12 +164,16 @@ a:focus {
   color: white;
   font-family: Montserrat;
 }
+.intro .list-group a:hover li {
+  background: rgba(255,255,255,0.1);
+}
 .intro .list-group li.selected {
   background: rgba(0,0,0,0.3);
 }
 .intro .list-group li {
   background: rgba(255,255,255,0.3);
   padding: 14px;
+  margin-top: 5px;
 }
 
 @media(min-width:767px) {
@@ -381,13 +385,17 @@ body {
   font-weight: 100 !important;
   font-size: 0.8em;
   margin-left: 5px;
+  margin-top: 3px;
 }
 .bootstrap-tagsinput .label {
   font-weight: 100 !important;
   float: left;
 }
 
-
+.bootstrap-tagsinput .label-info {
+  background-color: rgba(0,0,0,0.3);
+  padding: 7px;
+}
 
 span.twitter-typeahead .tt-dropdown-menu {
   position: absolute;
