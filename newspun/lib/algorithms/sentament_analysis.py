@@ -16,11 +16,11 @@ def change_score(tally,phrase,is_neg):
     leng = len(tokens)
     for each in tokens:
       if(is_neg):
-          if lib[each] and lib[each] < 0:
-            tally = add_append(each,lib[each],tally,leng)
+          if lib.get(each) and lib.get(each) < 0:
+            tally = add_append(each,lib.get(each),tally,leng)
       else:
-          if lib[each] and lib[each] > 0:
-            tally = add_append(each,lib[each],tally,leng)
+          if lib.get(each) and lib.get(each) > 0:
+            tally = add_append(each,lib.get(each),tally,leng)
 
     return tally
 

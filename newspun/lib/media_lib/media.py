@@ -126,13 +126,13 @@ class CNN():
 			soup = BeautifulSoup(response.content)
 			items = soup.findAll("item")
 			for item in items:
-				#now follow the link inside of this 
+				#now follow the link inside of this
 				#to get the full text
 				title = item.findAll("title")[0].text
 				#Hope this is unique... think it is!
 				item_id = title
 				link = item.findAll('feedburner:origlink')[0].text
-				
+
 				#get actual story
 				response2 = requests.get(link)
 				if not response.status_code == 20:
