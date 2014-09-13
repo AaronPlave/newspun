@@ -1,17 +1,36 @@
+[
 {
-    "source": "HuffingtonPost",
+  "source": "Huffington Post",
     "begin_date": "2013, 11, 5",
     "end_date": "2013,10,5",
     "frequencies": [
-        ["pleasant", 4],
-        ["australia", 3],
-        ["theyre", 3],
-        ["rest", 2],
-        ["us", 2],
-        ["roadblocks", 2],
-        ["concept", 1],
-        ["traditions", 1],
-        ["amplified", 1],
-        ["immune", 1]
-    ]
+      ["pleasant", 4],
+    ["australia", 3],
+    ["theyre", 3],
+    ["rest", 2],
+    ["us", 2],
+    ["roadblocks", 2],
+    ["concept", 1],
+    ["traditions", 1],
+    ["amplified", 1],
+    ["immune", 1]
+      ]
+},
+{
+  "source": "New York Times",
+    "begin_date": "2013, 11, 5",
+    "end_date": "2013,10,5",
+    "frequencies": [
+      ["wonderful", 4],
+    ["Turkey", 3],
+    ["Hawaii", 3],
+    ["Israel", 2],
+    ["us", 2],
+    ["roadblocks", 2],
+    ["concept", 1],
+    ["traditions", 1],
+    ["amplified", 1],
+    ["immune", 1]
+      ]
 }
+]

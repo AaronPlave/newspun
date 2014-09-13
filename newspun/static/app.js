@@ -90,11 +90,21 @@ var AppRouter = Backbone.Router.extend ({
       $('section#graphs').show();
       $('.navbar-nav li:eq(2)').show();
 
-      var type = $('header .selected').data('code');
+      var type = $('header .selected').parent().data('code');
 
-      $.getJSON('/static/sample_freq_data.json', function (data) {
-        frequency(data);
-      });
+      $('#graph-location').html('');
+      switch (type) {
+        case 'freq':
+          $.getJSON('/static/sample_freq_data.json', function (data) {
+            frequency(data, items);
+          });
+          break;
+
+        default:
+          this.navigate('', {trigger: true});
+
+      }
+
 
 
 
