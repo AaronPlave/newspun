@@ -267,3 +267,70 @@ class BBC():
 				except:
 					print "Unable to process BBC article:",item.findAll("title")[0].text
 
+class FOX():
+	def __init__(self,default_categories):
+		self.name = "FOXNews"
+		self.default_categories = default_categories
+		self.articles = []
+		self.categories = {
+			'Economics':"http://feeds.foxnews.com/foxnews/business",
+			'Entertainment':"http://feeds.foxnews.com/foxnews/entertainment",
+			'Politics':"http://feeds.foxnews.com/foxnews/politics",
+			'Science':"http://feeds.foxnews.com/foxnews/scitech",
+			'Technology':"http://feeds.foxnews.com/foxnews/scitech",
+			'World':"http://feeds.foxnews.com/foxnews/world"
+		}
+
+	def fetch_articles(self):
+		"""
+		Fetches articles from each item in each RSS feed in 'categories'
+		"""
+		#fetch from each category
+		for category in default_categories:
+			if not category in self.categories:
+				print "FOX does not have cat:", category
+				continue
+				response = requests.get(self.categories[category])
+				if not response.status_code == 200:
+					print "Unable to reach FOX feed:", category
+					continue
+				soup = BeautifulSoup(response.content)
+				items = soup.findAll("item")
+				for item in items:
+					try:
+						title = item.findAll("title")[0].text
+						pub_date = item.findAll("pubdate")[0].text
+						#now follow the link inside of this 
+						#to get the full text
+						
+						#Hope this is unique... think it is!
+						item_id = title
+						link = item.findAll('feedburner:origlink')[0].text
+
+						#get actual story
+						response2 = requests.get(link)
+						if not response.status_code == 200:
+							print "Unable to reach CNN feed-article:",link
+							continue
+
+						#get the story!
+						soup2 = BeautifulSoup(response2.content)
+
+						raw_text = soup2.findAll('div',{'itemprop':"articleBody"})
+						if not raw_text:
+							print "Unable to find text of article:",title
+						scrubbed_text = remove_tags(str(raw_text))
+						author = None
+						a = {
+						  'id':item_id,
+						  'title':title,
+						  'author':author,
+						  'category':category,
+						  'date_published':pub_date,
+						  'text':scrubbed_text,
+						  'source_url':link
+						}
+						print a
+					except:
+						print "Unable to process FOX article:",item.findAll("title")[0].text
+						
