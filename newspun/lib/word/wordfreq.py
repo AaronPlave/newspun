@@ -6,11 +6,6 @@ from nltk.tokenize.punkt import PunktWordTokenizer
 from pymongo import MongoClient
 import re
 
-client = MongoClient()
-db = client.newspindb
-raw_text = db.text
-frequencies = db.frequencies
-
 frequency = Blueprint('frequency',__name__,template_folder = 'templates')
 def add_article(text):
   text = re.sub('[.]','',text)
@@ -23,7 +18,6 @@ def add_article(text):
       'all_word_count' : freq,
       'most_common_five' : freq.most_common(5)
       }
-  frequencies.insert(freq_to_db)
   return freq
 
 @frequency.route('',methods = ['POST'])
