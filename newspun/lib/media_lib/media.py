@@ -89,4 +89,7 @@ class HuffingtonPost():
 	          'text':scrubbed_text,
 	          'source_url':item.id
 	          }
-        	db.text.insert(a)
+         if db.text.find(item.id:true):
+           break
+         else:
+           db.text.insert(a)
