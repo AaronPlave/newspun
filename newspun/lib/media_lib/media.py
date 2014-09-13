@@ -81,15 +81,15 @@ class HuffingtonPost():
 				raw_text = item['summary_detail'].value
 				scrubbed_text  = remove_tags(raw_text)
 				a = {
-	          'id':item.id,
-	          'title':item.title,
-	          'author':item.author,
-	          'category':category,
-	          'date_published':pub_date,
-	          'text':scrubbed_text,
-	          'source_url':item.id
-	          }
-         if db.text.find(item.id:true):
-           break
-         else:
-           db.text.insert(a)
+		          'id':item.id,
+		          'title':item.title,
+		          'author':item.author,
+		          'category':category,
+		          'date_published':pub_date,
+		          'text':scrubbed_text,
+		          'source_url':item.id
+		          }
+		        if db.text.find({item.id:true}):
+		        	break
+		        else:
+					db.text.insert(a)
