@@ -1,7 +1,13 @@
+from flask import jsonify
+from pymongo import MongoClient
 import feedparser
 import re
 import time
 import datetime
+
+client = MongoClient()
+db = client.newspindb
+raw_text = db.text
 
 default_categories = ['Economics','Entertainment','Food',
 		'Politics','Religion','Science','Sports','Style',
@@ -20,60 +26,13 @@ class Media():
 		for source in self.sources:
 			update_source(source)
 
-
 	def update_source(source):
 		if source == "HuffingtonPost":
 			huff = HuffingtonPost()
 			huff.fetch_articles()
-			
-			# update the last update time  
+
+			# update the last update time
 			self.last_update = time.time()
-
-			# create the MediaSource Object
-			ms = MediaSource(
-					name="HuffingtonPost",
-					articles=huff.articles,
-					categories=huff.categories.keys()
-				)
-			insert_ms(ms)
-
-	def insert_ms(ms):
-		#INSERT DB HERE TYLER!!!!!!!!!!!!!!!!!!!!
-		# db.text....upsert(ms)
-		pass
-
-
-
-
-#define article class
-class Article():
-	"""
-	Article docstring fill in later.
-	@Id is some unique identifier for the article
-	@Text is main text of article
-	@Source_url is the origin of the article
-	"""
-	def __init__(self,id,title,author,category,date_published,text,source_url):
-		self.id = id
-		self.title = title
-		self.author = author
-		self.date_published = date_published
-		self.text = text
-		self.source_url = source_url
-
-#define source class
-class MediaSource():
-	"""
-	MediaSource docstring fill in later.
-	@Name is a string identifier for the source, e.g. 'CNN' or 'MSNBC'
-	@Articles is a list of article objects associated with this media source
-	@Categories is a list of categories available for this media source
-	"""
-	def __init__(self,name,articles,categories,last_updated):
-		self.name = name
-		self.articles = articles
-		self.last_updated = last_updated
-
 
 TAG_RE = re.compile(r'<[^>]+>')
 def remove_tags(text):
@@ -106,7 +65,7 @@ class HuffingtonPost():
 		"""
 		Fetches articles from each item in each RSS feed in 'categories'
 		"""
-		#fetch from each category 
+		#fetch from each category
 		for category in default_categories:
 			#check if HuffPost has this category
 			if not category in self.categories:
@@ -118,26 +77,16 @@ class HuffingtonPost():
 				continue
 			items = fparser['items']
 			for item in items:
-				# parse date
-				print "Processing",item.title
 				pub_date = datetime.datetime.strptime(item.published,'%a, %d %b %Y %H:%M:%S -0400')
 				raw_text = item['summary_detail'].value
 				scrubbed_text  = remove_tags(raw_text)
-				article = Article(
-					id=item.id,
-					title=item.title,
-					author=item.author,
-					category=category,
-					date_published=pub_date,
-					text=scrubbed_text,
-					source_url=item.id
-				)
-				self.articles.append(article)
-
-			#try to avoid rate limit...
-			time.sleep(.25)
-
-		# return self.articles
-
-
- 
+				a = {
+          'id':item.id,
+          'title':item.title,
+          'author':item.author,
+          'category':category,
+          'date_published':pub_date,
+          'text':scrubbed_text,
+          'source_url':item.id
+          }
+        db.text.insert(a)
