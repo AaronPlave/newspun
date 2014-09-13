@@ -149,6 +149,7 @@ a:focus {
 .intro .intro-body {
     display: table-cell;
     vertical-align: middle;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(0,0,0,1) 100%);
 }
 
 .intro .intro-body .brand-heading {
@@ -280,6 +281,7 @@ a:focus {
     background-size: cover;
     -o-background-size: cover;
 }
+section
 
 @media(min-width:767px) {
     .content-section {
