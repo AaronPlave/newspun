@@ -38,7 +38,7 @@ class Media():
 
 TAG_RE = re.compile(r'<[^>]+>')
 def remove_tags(text):
-    return TAG_RE.sub('', text)
+	return TAG_RE.sub('', text)
 
 
 #below are specific source classes. Each will be slightly different depending on
@@ -83,17 +83,17 @@ class HuffingtonPost():
 				raw_text = item['summary_detail'].value
 				scrubbed_text  = remove_tags(raw_text)
 				a = {
-		          'id':item.id,
-		          'title':item.title,
-		          'author':item.author,
-		          'category':category,
-		          'date_published':pub_date,
-		          'text':scrubbed_text,
-		          'source_url':item.id
-		          }
-		        if db.text.find({item.id:true}):
-		        	break
-		        else:
+				  'id':item.id,
+				  'title':item.title,
+				  'author':item.author,
+				  'category':category,
+				  'date_published':pub_date,
+				  'text':scrubbed_text,
+				  'source_url':item.id
+				  }
+				if db.text.find({item.id:true}):
+					break
+				else:
 					db.text.insert(a)
 
 class CNN():
@@ -119,23 +119,64 @@ class CNN():
 			if not category in self.categories:
 				print "CNN does not have cat:",category
 				continue
+			print self.categories[category]
 			response = requests.get(self.categories[category])
-			if not response.status_code == 20:
+			if not response.status_code == 200:
 				print "Unable to reach CNN feed:",category
 				continue
 			soup = BeautifulSoup(response.content)
 			items = soup.findAll("item")
 			for item in items:
-				#now follow the link inside of this 
-				#to get the full text
-				title = item.findAll("title")[0].text
-				#Hope this is unique... think it is!
-				item_id = title
-				link = item.findAll('feedburner:origlink')[0].text
-				
-				#get actual story
-				response2 = requests.get(link)
-				if not response.status_code == 20:
-					print "Unable to reach CNN feed-article:",category
-					continue
+				try:
+					title = item.findAll("title")[0].text
+					pub_date = item.findAll("pubdate")[0].text
+					#now follow the link inside of this 
+					#to get the full text
+					
+					#Hope this is unique... think it is!
+					item_id = title
+					link = item.findAll('feedburner:origlink')[0].text
+					
+					#get actual story
+					response2 = requests.get(link)
+					if not response.status_code == 200:
+						print "Unable to reach CNN feed-article:",link
+						continue
+
+					#get the story!
+					soup2 = BeautifulSoup(response2.content)
+
+					#decide what id to pull from. First approach is
+					#to just try both..
+					raw_text_1 = soup2.findAll(id='storytext')
+					raw_text_2 = soup2.findAll('div',{'class':"cnn_strycntntlft"})
+					raw_text = ""
+					if raw_text_1:
+						raw_text = raw_text_1
+					elif raw_text_2:
+						raw_text = raw_text_2
+					else:
+						print "Unable to find text of article:",title
+						continue
+
+					scrubbed_text = remove_tags(str(raw_text))
+					author = soup2.findAll('meta',{'name':'author'})[0].text
+					a = {
+					  'id':item_id,
+					  'title':title,
+					  'author':author,
+					  'category':category,
+					  'date_published':pub_date,
+					  'text':scrubbed_text,
+					  'source_url':link
+					}
+					print a
+				except:
+					print "Unable to process CNN article:",item.findAll("title")[0].text
+		   #      if db.text.find({item.id:true}):
+					# break
+		   #      else:
+					# db.text.insert(a)
+
+
 
