@@ -16,6 +16,10 @@ default_categories = ['Economics','Entertainment','Food',
 		'Technology','Travel','World'
 ]
 
+def add_to_db(obj_to_insert,id_value):
+	if db.text.find({'id':id_value}).count() == 0:
+		db.text.insert(obj_to_insert)
+
 class Media():
 	def __init__(self,sources,last_update,categories):
 		self.sources = ['HuffingtonPost']
@@ -91,10 +95,10 @@ class HuffingtonPost():
 				  'text':scrubbed_text,
 				  'source_url':item.id
 				  }
-				if db.text.find({item.id:true}):
-					break
-				else:
-					db.text.insert(a)
+
+				add_to_db(a,item.id)
+				# if not db.text.find({'id':item.id}):
+				# 	db.text.insert(a)
 
 class CNN():
 	def __init__(self,default_categories):
@@ -170,13 +174,96 @@ class CNN():
 					  'text':scrubbed_text,
 					  'source_url':link
 					}
-					print a
+					add_to_db(a,item_id)
+					# if not db.text.find({'id':item.id}):
+					# 	db.text.insert(a)
 				except:
 					print "Unable to process CNN article:",item.findAll("title")[0].text
-		   #      if db.text.find({item.id:true}):
-					# break
-		   #      else:
-					# db.text.insert(a)
 
 
+
+
+class BBC():
+	def __init__(self,default_categories):
+		self.name = "BBC"
+		self.default_categories = default_categories
+		self.articles=[]
+		self.categories = {
+			'Economics':"http://feeds.bbci.co.uk/news/business/economy/rss.xml",
+			'Entertainment':"http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml",
+			"Politics":"http://feeds.bbci.co.uk/news/politics/rss.xml",
+			"Science":"http://www.bbc.co.uk/science/0/rss.xml",
+			"Technology":"http://feeds.bbci.co.uk/news/technology/rss.xml",
+			"World":"http://feeds.bbci.co.uk/news/rss.xml"
+		}
+
+	def fetch_articles(self):
+		"""
+		Fetches articles from each item in each RSS feed in 'categories'
+		"""
+		#fetch from each category
+		for category in default_categories:
+			if not category in self.categories:
+				print "BBC does not have cat:",category
+				continue
+			print self.categories[category]
+			response = requests.get(self.categories[category])
+			if not response.status_code == 200:
+				print "Unable to reach BBC feed:",category
+				continue
+			soup = BeautifulSoup(response.content)
+			items = soup.findAll("item")
+			print "LENGTH = ",len(items)
+			for item in items:
+				try:
+					title = item.findAll("title")[0].text
+					print "PROCESSING: TITLE=",title
+					pub_date = item.findAll("pubdate")[0].text
+					#now follow the link inside of this 
+					#to get the full text
+					
+					#Hope this is unique... think it is!
+					item_id = title
+					link = item.findAll('guid')[0].text
+					
+					#NOTE: BBC Articles do not list authors!
+
+					#get actual story
+					response2 = requests.get(link)
+					if not response.status_code == 200:
+						print "Unable to reach BBC feed-article:",link
+						continue
+
+					#get the story!
+					soup2 = BeautifulSoup(response2.content)
+
+					#decide what id to pull from. First approach is
+					#to just try both..
+					raw_text_1 = soup2.findAll('div',{'class':'story-body'})
+					# raw_text_2 = soup2.findAll('div',{'class':"cnn_strycntntlft"})
+					raw_text = ""
+					if raw_text_1:
+						raw_text = raw_text_1
+					# elif raw_text_2:
+						# raw_text = raw_text_2
+					else:
+						print "Unable to find text of article:",title
+						continue
+
+					scrubbed_text = remove_tags(str(raw_text))
+					a = {
+					  'id':item_id,
+					  'title':title,
+					  'author':None,
+					  'category':category,
+					  'date_published':pub_date,
+					  'text':scrubbed_text,
+					  'source_url':link
+					}
+					add_to_db(a,item_id)
+					# if not db.text.find({'id':item.id}):
+					# 	db.text.insert(a)
+
+				except:
+					print "Unable to process BBC article:",item.findAll("title")[0].text
 
