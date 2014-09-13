@@ -368,11 +368,80 @@ body {
   border-radius: 15px;
   font-weight: 100 !important;
   padding: 15px;
+  width: 500px;
 }
 .bootstrap-tagsinput input {
   background: transparent;
   border: 0;
+  color: white;
+  font-weight: 100 !important;
+  font-size: 0.8em;
+  margin-left: 5px;
 }
 .bootstrap-tagsinput .label {
   font-weight: 100 !important;
+  float: left;
+}
+
+
+
+span.twitter-typeahead .tt-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 200px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 10px;
+  text-align: left;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+  width: 100%;
+}
+span.twitter-typeahead .tt-suggestion > p {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: 100;
+  line-height: 1.2;
+  font-size: 15px;
+  color: #333333;
+  white-space: nowrap;
+  margin-bottom: 5px;
+}
+span.twitter-typeahead .tt-suggestion > p:hover,
+span.twitter-typeahead .tt-suggestion > p:focus {
+  color: #ffffff !important;
+  text-decoration: none;
+  outline: 0;
+  background-color: #428bca;
+}
+span.twitter-typeahead .tt-suggestion.tt-cursor {
+  color: #ffffff !important;
+  background-color: #428bca;
+}
+span.twitter-typeahead {
+  /* width: 100%; */
+  float: left;
+}
+.input-group span.twitter-typeahead {
+  display: block !important;
+}
+.input-group span.twitter-typeahead .tt-dropdown-menu {
+  top: 32px !important;
+}
+.input-group.input-group-lg span.twitter-typeahead .tt-dropdown-menu {
+  top: 44px !important;
+}
+.input-group.input-group-sm span.twitter-typeahead .tt-dropdown-menu {
+  top: 28px !important;
 }

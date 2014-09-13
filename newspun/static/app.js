@@ -20,6 +20,27 @@ $(function() {
         }, 500, 'easeInOutExpo');
         event.preventDefault();
     });
+
+  var engine = new Bloodhound({
+    name: 'sources',
+    local: [{ name: 'NBC' }, { name: 'Washington Post' }, { name: 'New York Times' }],
+    datumTokenizer: function(d) {
+      return Bloodhound.tokenizers.whitespace(d.name);
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace
+  });
+
+  engine.initialize();
+  $('input').tagsinput({
+    typeaheadjs: {
+      name: 'sources',
+      displayKey: 'name',
+      valueKey: 'name',
+      source: engine.ttAdapter()
+    },
+    freeInput: false
+  });
+
 });
 
 // Closes the Responsive Menu on Menu Item Click
