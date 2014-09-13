@@ -4,7 +4,7 @@ import feedparser
 import re
 import time
 import datetime
-import request
+import requests
 from BeautifulSoup import BeautifulSoup
 
 client = MongoClient()
@@ -114,8 +114,28 @@ class CNN():
 		"""
 		Fetches articles from each item in each RSS feed in 'categories'
 		"""
-		if not category in self.categories:
-			print "CNN does not have cat:",category
-			continue
-		response = requests.get(self.categories[category])
+		#fetch from each category
+		for category in default_categories:
+			if not category in self.categories:
+				print "CNN does not have cat:",category
+				continue
+			response = requests.get(self.categories[category])
+			if not response.status_code == 20:
+				print "Unable to reach CNN feed:",category
+				continue
+			soup = BeautifulSoup(response.content)
+			items = soup.findAll("item")
+			for item in items:
+				#now follow the link inside of this 
+				#to get the full text
+				title = item.findAll("title")[0].text
+				#Hope this is unique... think it is!
+				item_id = title
+				link = item.findAll('feedburner:origlink')[0].text
+				
+				#get actual story
+				response2 = requests.get(link)
+				if not response.status_code == 20:
+					print "Unable to reach CNN feed-article:",category
+					continue
 
