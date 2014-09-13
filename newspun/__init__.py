@@ -5,7 +5,7 @@ from lib.media_lib import media
 app = Flask(__name__)
 
 # Initialize blueprints
-app.register_blueprint(frequency,url_prefix='/frequency')
+app.register_blueprint(wordfreq,url_prefix='/frequency')
 
 @app.route('/')
 def index():

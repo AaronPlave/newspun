@@ -10,14 +10,39 @@ default_categories = ['Economics','Entertainment','Food',
 
 class Media():
 	def __init__(self,sources,last_update,categories):
-		self.sources = sources
+		self.sources = ['HuffingtonPost']
 		self.last_update = last_update
 
-	def update():
+	def update_all():
 		"""
 		Updates all news sources and adds them to the db
 		"""
+		for source in self.sources:
+			update_source(source)
+
+
+	def update_source(source):
+		if source == "HuffingtonPost":
+			huff = HuffingtonPost()
+			huff.fetch_articles()
+			
+			# update the last update time  
+			self.last_update = time.time()
+
+			# create the MediaSource Object
+			ms = MediaSource(
+					name="HuffingtonPost",
+					articles=huff.articles,
+					categories=huff.categories.keys()
+				)
+			insert_ms(ms)
+
+	def insert_ms(ms):
+		#INSERT DB HERE TYLER!!!!!!!!!!!!!!!!!!!!
+		# db.text....upsert(ms)
 		pass
+
+
 
 
 #define article class
