@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask import json
 from flask import jsonify
 from pymongo import MongoClient
-from lib.word.wordfrequency import frequency
+from lib.algorithms import wordfreq
 from lib.algorithms import GunningFog
 from lib.algorithms import sentament_analysis
 client = MongoClient()
