@@ -1,5 +1,3 @@
-import sys
-
 verbose = False
 
 #countsyl by shallowsky, with some editing
@@ -62,38 +60,27 @@ def count_syllables(word):
         maxsyl += 1
     return (minsyl + maxsyl) / 2
 
-
-def count(filename):
+#returns Gunning Fog number for given text
+def count(text):
     clauses, words, hardwords = 0, 0, 0
-    textf = open(filename, 'r')
-    #
-    for line in textf:
-        # assuming major clauses end in '.', '!', '?', ':', or ';', count clauses
-        clauses += line.count('.') + line.count('!') + line.count('?') + line.count(':') + line.count(';')
-        tempwords = line.split(None)
-        for word in tempwords:
-            #four+ syllable words can be considered complex
-            syllables = count_syllables(word.strip())
-            if syllables > 3:
+    # assuming major clauses end in '.', '!', '?', ':', or ';', count clauses
+    clauses += text.count('.') + text.count('!') + text.count('?') + text.count(':') + text.count(';')
+    tempwords = text.split(None)
+    for word in tempwords:
+        #four+ syllable words can be considered complex
+        syllables = count_syllables(word.strip())
+        if syllables > 3:
+            hardwords += 1
+        #discount words that are three syllables because of common endings
+        #otherwise three syllable words are also complex
+        elif syllables == 3:
+            if not (word.endswith('ed') or word.endswith('ing') or word.endswith('es') or word.endswith('ly')):
                 hardwords += 1
-            #discount words that are three syllables because of common endings
-            #otherwise three syllable words are also complex
-            elif syllables == 3:
-                if not (word.endswith('ed') or word.endswith('ing') or word.endswith('es') or word.endswith('ly')):
-                    hardwords += 1
-        #number of words in text
-        words += len(tempwords)
-    textf.close()
+    #number of words in text
+    words += len(tempwords)
     #making decimals work
     wordy = float(words)
     #The Gunning Fog formula for readability of text, in number of years of education necessary
     #to understand the material
     GunningFog = 0.4 * ((wordy / clauses) + 100 * (hardwords / wordy))
-    print "Gunning Fog: ", GunningFog
-
-
-if __name__ == '__main__':
-    if sys.argv[1].startswith('-f'):
-        count(sys.argv[2])
-    else:
-        count(sys.argv[1:])
+    return GunningFog
