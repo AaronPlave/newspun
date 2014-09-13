@@ -74,6 +74,12 @@ var AppRouter = Backbone.Router.extend ({
     },
     'graphs': function () {
       if(!started) {this.navigate('',{trigger:true});return;}
+      var items = $('input:eq(0)').tagsinput('items');
+      console.log(items);
+      if(items.length === 0) {
+        this.navigate('sources',{trigger: true});
+        return;
+      }
       // Graphs route
       $('section#graphs').show();
       $('.navbar-nav li:eq(2)').show();
@@ -88,4 +94,9 @@ var AppRouter = Backbone.Router.extend ({
 $(document).ready(function () {
   var appRouter = new AppRouter();
   Backbone.history.start();
+
+  $('.intro .list-group li').click(function () {
+    $('.intro .list-group li').removeClass('selected');
+    $(this).addClass('selected');
+  })
 });
