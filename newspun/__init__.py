@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template
 from lib.word import wordfreq
+from lib.media_lib import media
 app = Flask(__name__)
 
 # Initialize blueprints
