@@ -20,7 +20,7 @@ def index():
 def sources():
 	return json.dumps([
   	{'val': 'Huffington Post'},
-  	{'val': 'CNN'}, 
+  	{'val': 'CNN'},
   	{'val':'FOX news'},
   	{'val':'BBC'}])
 
@@ -45,10 +45,11 @@ def force_update():
 
 def background_update():
 	media_obj = media.Media()
-	media_obj.update_source('HuffingtonPost')
-	media_obj.update_source('BBC')
+	# media_obj.update_source('HuffingtonPost')
+	# media_obj.update_source('BBC')
+	media_obj.update_all()
 	print "Finished updating DB"
 	process.analyze_all_items()
-	
+
 if __name__ == '__main__':
     app.run()

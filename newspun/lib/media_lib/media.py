@@ -29,12 +29,12 @@ class Media():
 	def __init__(self):
 		self.sources = sources
 
-	def update_all():
+	def update_all(self):
 		"""
 		Updates all news sources and adds them to the db
 		"""
 		for source in self.sources:
-			update_source(source)
+			self.update_source(source)
 
 	def update_source(self,source):
 		if source == "HuffingtonPost":
@@ -164,13 +164,13 @@ class CNN():
 				try:
 					title = item.findAll("title")[0].text
 					pub_date = item.findAll("pubdate")[0].text
-					#now follow the link inside of this 
+					#now follow the link inside of this
 					#to get the full text
-					
+
 					#Hope this is unique... think it is!
 					item_id = title
 					link = item.findAll('feedburner:origlink')[0].text
-					
+
 					#get actual story
 					response2 = requests.get(link)
 					if not response.status_code == 200:
@@ -249,13 +249,13 @@ class BBC():
 					title = item.findAll("title")[0].text
 					print "PROCESSING: TITLE=",title
 					pub_date = item.findAll("pubdate")[0].text
-					#now follow the link inside of this 
+					#now follow the link inside of this
 					#to get the full text
-					
+
 					#Hope this is unique... think it is!
 					item_id = title
 					link = item.findAll('guid')[0].text
-					
+
 					#NOTE: BBC Articles do not list authors!
 
 					#get actual story
@@ -332,9 +332,9 @@ class FOXNews():
 				try:
 					title = item.findAll("title")[0].text
 					pub_date = item.findAll("pubdate")[0].text
-					#now follow the link inside of this 
+					#now follow the link inside of this
 					#to get the full text
-					
+
 					#Hope this is unique... think it is!
 					item_id = title
 					link = item.findAll('feedburner:origlink')[0].text
@@ -366,4 +366,4 @@ class FOXNews():
 					add_to_db(a,item_id)
 				except:
 					print "Unable to process FOXNews article:",item.findAll("title")[0].text
-						
+

@@ -16,7 +16,6 @@ $.getJSON('/sources', function(sources) {
   console.log(sources);
   var engine = new Bloodhound({
     name: 'sources',
-    // local: [{ name: 'NBC' }, { name: 'Washington Post' }, { name: 'New York Times' }],
     local: sources.map(function (item) {
       return {name: item.val};
     }),
@@ -99,6 +98,9 @@ var AppRouter = Backbone.Router.extend ({
       // Graphs route
       $('section#graphs').show();
       $('.navbar-nav li:eq(2)').show();
+      var sourceList = items.map(function (str) {
+        return str.replace(/\s/g, '');
+      }).join('?');
 
       $('#graph-location').html('');
       switch (type) {
@@ -108,16 +110,16 @@ var AppRouter = Backbone.Router.extend ({
           });
           break;
         case 'sentiment':
-          $.getJSON('/', function () {
-
+          $.getJSON('/api?sources=' + sourceList + '&type=sentiment', function (data) {
+            console.log(data);
           });
         case 'readability':
-          $.getJSON('/', function () {
-
+          $.getJSON('/api?sources=' + sourceList + '&type=readability', function (data) {
+            console.log(data);
           });
         case 'proximity':
-          $.getJSON('/', function () {
-
+          $.getJSON('/api?sources=' + sourceList + '&type=proximity', function (data) {
+            console.log(data);
           });
         default:
           this.navigate('', {trigger: true});
