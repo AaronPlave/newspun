@@ -16,11 +16,15 @@ def analyze_all_items():
   items = raw_text.find()
   for each in items:
     process(each)
-    
+
   raw_text.drop()
   print "Finished processing DB data"
 
 def process(collection_item):
+  # check if already in DB, just in case.
+  if processed.find({'id':collection_item['id']}).count() != 0:
+    return
+
   text = collection_item['text']
   words = wordfreq.all_word_count(text)
   common_words = wordfreq.most_common_words(text)
@@ -32,6 +36,5 @@ def process(collection_item):
   collection_item["readability_score"] = readability
   collection_item['sentiment'] = sentiment
   collection_item['tags'] = types
-  if processed.find(collection_item).count() == 0:
-    processed.insert(collection_item)
+  processed.insert(collection_item)
   

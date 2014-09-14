@@ -1,14 +1,17 @@
-from flask import Flask
+from flask import Flask, request
 from flask import render_template
-import json
 from lib.media_lib import media
 from lib.algorithms import process
+from api import api
 from uwsgidecorators import *
+import threading
+import json
 import time
 
 app = Flask(__name__)
 
 # Initialize blueprints
+app.register_blueprint(api,url_prefix='/api')
 
 @app.route('/')
 def index():
@@ -16,25 +19,28 @@ def index():
 
 @app.route('/sources')
 def sources():
-  return json.dumps([
+	return json.dumps([
   	{'val': 'Huffington Post'},
   	{'val': 'CNN'}, 
   	{'val':'FOX news'},
   	{'val':'BBC'}])
 
-@thread
-def update():
-	WAIT_TIME = 60
+# @app.route('/api')
+# def api():
+# 	return api.handle_request(request)
+# 	# return api.hello1()
+
+
+@timer(1800)
+def update(args):
+	t = threading.Thread(target=background_update)
+	t.start()
+
+def background_update():
 	media_obj = media.Media()
 	media_obj.update_source('HuffingtonPost')
 	print "Finished updating DB"
 	process.analyze_all_items()
-
-	# now wait
-	for i in xrange(0, WAIT_TIME):
-		time.sleep(0.5)
-
-update()
-
+	
 if __name__ == '__main__':
     app.run()
