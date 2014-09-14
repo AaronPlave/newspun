@@ -12,10 +12,10 @@ api = Blueprint('api',__name__,template_folder = 'templates')
 
 @analyze.route('')
 def index():
-  if request.form.get('source'):
-    if not request.form.get('catagory'):
-      processed.find({'source':request.form.get('source')})
-    else:
-      processed.find({'source':request.form.get('source')})
-  if request.form.get('catagory'):
+	#sources will be a list of source IDs.
+	if request.form.get('sources'):
+		if not request.form.get('category'):
+      		processed.find({'source':request.form.get('source')})
+    	else:
+      		processed.find({'source':request.form.get('source')})
 
