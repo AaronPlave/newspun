@@ -9,6 +9,7 @@ db = client.newspindb
 processed = db.processed
 
 api = Blueprint('api',__name__,template_folder = 'templates')
+
 #joomy passes the source, topics, type
 @analyze.route('')
 def index():
@@ -19,7 +20,7 @@ def index():
     selected = processed.find('media_source':src)
   if topic:
     selected = selected.find('tags':topic)
-  if not selcted:
+  if not selected:
     return jsonify({'ERROR':'NO DATA REQUESTED'})
   if type_of_query:
     selected.get("type")
