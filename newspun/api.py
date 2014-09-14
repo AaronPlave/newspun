@@ -18,6 +18,7 @@ api = Blueprint('api',__name__,template_folder='templates')
 # readability    
 # proximity
 
+
 @api.route("")
 def index():
 	print "REQ",request.args
@@ -44,15 +45,35 @@ def index():
 		HuffPost = 0
 		BBC = 0
 		FOX = 0
-		for article in selected_sources[CNN]:
-			CNN += article["word_count"][input1]
-		for each in selected_sources[HuffPost]:
-			HuffPost += article["word_count"][input1]
-		for each in selected_sources[BBC]:
-			BBC += article["word_count"][input1]
-		for each in selected_sources[FOX]:
-			FOX += article["word_count"][input1]
-		return jsonify(CNN, HuffPost, BBC, FOX)
+
+		if 'CNN' not in selected_sources:
+			selected_sources['CNN'] = {}
+		if 'HuffingtonPost' not in selected_sources:
+			selected_sources['HuffingtonPost'] = {}
+		if 'BBC' not in selected_sources:
+			selected_sources['BBC'] = {}
+		if 'FOXNews' not in selected_sources:
+			selected_sources['FOXNews'] = {}
+
+		for article in selected_sources['CNN']:
+			ad = eval(article["word_count"])
+			if ad.get(input1):
+				CNN += ad[input1]
+		for article in selected_sources['HuffingtonPost']:
+			print eval(article["word_count"])
+			ad = eval(article["word_count"])
+			if ad.get(input1):
+				HuffPost += ad[input1]
+		for article in selected_sources['BBC']:
+			ad = eval(article["word_count"])
+			if ad.get(input1):
+				BBC += ad[input1]
+		for article in selected_sources['FOXNews']:
+			ad = eval(article["word_count"])
+			if ad.get(input1):
+				FOX += ad[input1]
+
+		return jsonify({"CNN":CNN, "HuffingtonPost":HuffPost, "BBC":BBC, "FOXNews":FOX})
 
 	elif type_of_analysis == 'common_words':
 		# results = [s['common_words'] for s in selected_sources
