@@ -22,7 +22,7 @@ def add_to_db(obj_to_insert,id_value):
 
 class Media():
 	def __init__(self,sources,last_update,categories):
-		self.sources = ['HuffingtonPost']
+		self.sources = ['HuffingtonPost','CNN','FOXNews','BBC']
 		self.last_update = last_update
 
 	def update_all():
@@ -36,6 +36,13 @@ class Media():
 		if source == "HuffingtonPost":
 			huff = HuffingtonPost()
 			huff.fetch_articles()
+
+			# update the last update time
+			self.last_update = time.time()
+
+		elif source == "CNN":
+			cnn = CNN()
+			cnn.fetch_articles()
 
 			# update the last update time
 			self.last_update = time.time()
@@ -82,6 +89,7 @@ class HuffingtonPost():
 				print "Unable to init feedparser on:",category
 				continue
 			items = fparser['items']
+			print "Processing HuffingtonPost-- Category:",category," article count:",len(items)
 			for item in items:
 				pub_date = datetime.datetime.strptime(item.published,'%a, %d %b %Y %H:%M:%S -0400')
 				raw_text = item['summary_detail'].value
@@ -130,6 +138,7 @@ class CNN():
 				continue
 			soup = BeautifulSoup(response.content)
 			items = soup.findAll("item")
+			print "Processing CNN-- Category:",category," article count:",len(items)
 			for item in items:
 				try:
 					title = item.findAll("title")[0].text
@@ -206,14 +215,13 @@ class BBC():
 			if not category in self.categories:
 				print "BBC does not have cat:",category
 				continue
-			print self.categories[category]
 			response = requests.get(self.categories[category])
 			if not response.status_code == 200:
 				print "Unable to reach BBC feed:",category
 				continue
 			soup = BeautifulSoup(response.content)
 			items = soup.findAll("item")
-			print "LENGTH = ",len(items)
+			print "Processing BBC-- Category:",category," article count:",len(items)
 			for item in items:
 				try:
 					title = item.findAll("title")[0].text
@@ -267,7 +275,7 @@ class BBC():
 				except:
 					print "Unable to process BBC article:",item.findAll("title")[0].text
 
-class FOX():
+class FOXNews():
 	def __init__(self,default_categories):
 		self.name = "FOXNews"
 		self.default_categories = default_categories
@@ -288,49 +296,50 @@ class FOX():
 		#fetch from each category
 		for category in default_categories:
 			if not category in self.categories:
-				print "FOX does not have cat:", category
+				print "FOXNews does not have cat:", category
 				continue
-				response = requests.get(self.categories[category])
-				if not response.status_code == 200:
-					print "Unable to reach FOX feed:", category
-					continue
-				soup = BeautifulSoup(response.content)
-				items = soup.findAll("item")
-				for item in items:
-					try:
-						title = item.findAll("title")[0].text
-						pub_date = item.findAll("pubdate")[0].text
-						#now follow the link inside of this 
-						#to get the full text
-						
-						#Hope this is unique... think it is!
-						item_id = title
-						link = item.findAll('feedburner:origlink')[0].text
+			response = requests.get(self.categories[category])
+			if not response.status_code == 200:
+				print "Unable to reach FOXNews feed:", category
+				continue
+			soup = BeautifulSoup(response.content)
+			items = soup.findAll("item")
+			print "Processing FOXNews-- Category:",category," article count:",len(items)
+			for item in items:
+				try:
+					title = item.findAll("title")[0].text
+					pub_date = item.findAll("pubdate")[0].text
+					#now follow the link inside of this 
+					#to get the full text
+					
+					#Hope this is unique... think it is!
+					item_id = title
+					link = item.findAll('feedburner:origlink')[0].text
 
-						#get actual story
-						response2 = requests.get(link)
-						if not response.status_code == 200:
-							print "Unable to reach CNN feed-article:",link
-							continue
+					#get actual story
+					response2 = requests.get(link)
+					if not response.status_code == 200:
+						print "Unable to reach FOXNews feed-article:",link
+						continue
 
-						#get the story!
-						soup2 = BeautifulSoup(response2.content)
+					#get the story!
+					soup2 = BeautifulSoup(response2.content)
 
-						raw_text = soup2.findAll('div',{'itemprop':"articleBody"})
-						if not raw_text:
-							print "Unable to find text of article:",title
-						scrubbed_text = remove_tags(str(raw_text))
-						author = None
-						a = {
-						  'id':item_id,
-						  'title':title,
-						  'author':author,
-						  'category':category,
-						  'date_published':pub_date,
-						  'text':scrubbed_text,
-						  'source_url':link
-						}
-						print a
-					except:
-						print "Unable to process FOX article:",item.findAll("title")[0].text
+					raw_text = soup2.findAll('div',{'itemprop':"articleBody"})
+					if not raw_text:
+						print "Unable to find text of article:",title
+					scrubbed_text = remove_tags(str(raw_text))
+					author = None
+					a = {
+					  'id':item_id,
+					  'title':title,
+					  'author':author,
+					  'category':category,
+					  'date_published':pub_date,
+					  'text':scrubbed_text,
+					  'source_url':link
+					}
+					add_to_db(a,item_id)
+				except:
+					print "Unable to process FOXNews article:",item.findAll("title")[0].text
 						
