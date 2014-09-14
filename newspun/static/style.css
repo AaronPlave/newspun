@@ -554,4 +554,6 @@ thead th {
   top: 100%;
   left: 0;
 }
-
+.arc path {
+  stroke: #fff;
+}

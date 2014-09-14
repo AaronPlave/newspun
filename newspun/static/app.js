@@ -135,6 +135,7 @@ var AppRouter = Backbone.Router.extend ({
         case 'proximity':
           $.getJSON('/api?sources=' + sourceList + '&type=proximity', function (data) {
             console.log(data);
+            proximity(data);
           });
           break;
         default:
