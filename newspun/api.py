@@ -39,19 +39,18 @@ def index():
 		return jsonify({'ERROR':'NO DATA REQUESTED'})
 	
 	#algs switches
-	if type_of_query == 'unique_freq':
+	if type_of_analysis == 'unique_freq':
 		return jsonify({'ERROR':'NOT YET IMPLEMENTED'})
 
-	elif type_of_query == 'common_words':
-		
+	elif type_of_analysis == 'common_words':
 		# results = [s['common_words'] for s in selected_sources
 		# for each data source, grab text, analyze
 		return jsonify({'ERROR':'NOT YET IMPLEMENTED'})		
-	elif type_of_query == 'sentiment':
+	elif type_of_analysis == 'sentiment':
 		return jsonify({'ERROR':'NOT YET IMPLEMENTED'})	
 
-	elif type_of_query == 'readability':
-		print "Computing:",type_of_query
+	elif type_of_analysis == 'readability':
+		print "Computing:",type_of_analysis
 		#average the readability over each source's respective articles
 		calculated_scores = []
 		for source in selected_sources:
