@@ -16,6 +16,9 @@ default_categories = ['Economics','Entertainment','Food',
 		'Technology','Travel','World'
 ]
 
+sources = ['HuffingtonPost','CNN','FOXNews','BBC']
+
+
 def add_to_db(obj_to_insert,id_value):
 	if db.text.find({'id':id_value}).count() == 0:
 		db.text.insert(obj_to_insert)
@@ -24,7 +27,7 @@ def add_to_db(obj_to_insert,id_value):
 #TODO: Figure out time system and last_update
 class Media():
 	def __init__(self):
-		self.sources = ['HuffingtonPost','CNN','FOXNews','BBC']
+		self.sources = sources
 
 	def update_all():
 		"""
