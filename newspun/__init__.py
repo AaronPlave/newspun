@@ -1,11 +1,13 @@
 from flask import Flask
 from flask import render_template
 import json
-from lib.word.wordfreq import frequency
+from lib.process import process
 from lib.media_lib import media
+
 app = Flask(__name__)
 
 # Initialize blueprints
+app.register_blueprint(process,url_prefix = '/process')
 
 @app.route('/')
 def index():

@@ -1,6 +1,6 @@
 import re
 import json
-json_data = open('../wordlist/words.json').read()
+json_data = open('words.json').read()
 lib = json.loads(json_data)
 
 class scored_words():
