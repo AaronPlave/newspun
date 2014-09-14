@@ -30,6 +30,10 @@ def sources():
 # 	return api.handle_request(request)
 # 	# return api.hello1()
 
+#TODO: Make something on a timer to delete articles
+#older than X...
+
+
 @app.route('/force_populate_database_secret_key')
 def force_update():
 	t = threading.Thread(target=background_update)
