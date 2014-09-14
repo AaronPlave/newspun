@@ -226,6 +226,7 @@ def index():
 		return json.dumps(calculated_scores)
 
 	elif type_of_analysis == 'proximity':
+		print 'testing thing'
 		CNN = 0
 		HuffPost = 0
 		BBC = 0
