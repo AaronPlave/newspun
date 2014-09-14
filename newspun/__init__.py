@@ -43,6 +43,7 @@ def update(args):
 def background_update():
 	media_obj = media.Media()
 	media_obj.update_source('HuffingtonPost')
+	media_obj.update_source('BBC')
 	print "Finished updating DB"
 	process.analyze_all_items()
 	
