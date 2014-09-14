@@ -2,9 +2,9 @@ from flask import Blueprint
 from flask import json
 from flask import jsonify
 from pymongo import MongoClient
-#from lib.algorithms import wordfreq
-from lib.algorithms import GunningFog
-from lib.algorithms import sentament_analysis
+import wordfreq
+import GunningFog
+import sentament_analysis
 
 client = MongoClient()
 db = client.newspundb
