@@ -232,6 +232,7 @@ def index():
 		FOX = 0
 		for article in selected_sources[CNN]:
 			CNN += proximity(article["text"],input1,input2)
+			print CNN
 		for each in selected_sources[HuffPost]:
 			HuffPost += proximity(article["text"],input1,input2)
 		for each in selected_sources[BBC]:
