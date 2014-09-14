@@ -3,7 +3,6 @@ from flask import render_template
 from lib.media_lib import media
 from lib.algorithms import process
 from api import api
-from uwsgidecorators import *
 import threading
 import json
 import time
@@ -39,10 +38,10 @@ def force_update():
 	t = threading.Thread(target=background_update)
 	t.start()
 
-@timer(1800)
-def update(args):
-	t = threading.Thread(target=background_update)
-	t.start()
+# @timer(1800)
+# def update(args):
+# 	t = threading.Thread(target=background_update)
+# 	t.start()
 
 def background_update():
 	media_obj = media.Media()
