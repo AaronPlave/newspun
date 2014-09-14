@@ -14,8 +14,8 @@ api = Blueprint('api',__name__,template_folder='templates')
 
 # common_words   --returns top 10 most common words for srcs
 # unique_freq    --returns freq of particular word, avg over all @input1=unique word
-# sentiment      
-# readability    
+# sentiment
+# readability
 # proximity
 
 @api.route("")
@@ -23,7 +23,7 @@ def index():
 	print "REQ",request.args
 	srcs_str = request.args.get('sources')
 	srcs = srcs_str.split('?')
-	print "SRCS:",srcs		
+	print "SRCS:",srcs
 	type_of_analysis = request.args.get('type')
 	print "TYPE:",type_of_analysis
 	input1 = request.args.get('input1')
@@ -37,7 +37,7 @@ def index():
 
 	if not selected_sources:
 		return jsonify({'ERROR':'NO DATA REQUESTED'})
-	
+
 	#algs switches
 	if type_of_analysis == 'unique_freq':
 		CNN = 0
@@ -147,19 +147,19 @@ def index():
 		print "CALC SCORES:",calculated_scores
 		return json.dumps(calculated_scores)
 
-	elif type_of_query == 'proximity':
+	elif type_of_analysis == 'proximity':
 		CNN = 0
 		HuffPost = 0
 		BBC = 0
 		FOX = 0
 		for article in selected_sources[CNN]:
-			CNN += proximity(text,input1,input2)
+			CNN += proximate(text,input1,input2)
 		for each in selected_sources[HuffPost]:
-			HuffPost += proximity(text,input1,input2)
+			HuffPost += proximate(text,input1,input2)
 		for each in selected_sources[BBC]:
-			BBC += proximity(text,input1,input2)
+			BBC += proximate(text,input1,input2)
 		for each in selected_sources[FOX]:
-			FOX += proximity(text,input1,input2)
+			FOX += proximate(text,input1,input2)
 		return jsonify(CNN, HuffPost, BBC, FOX)
 
 	selected.get("type")
