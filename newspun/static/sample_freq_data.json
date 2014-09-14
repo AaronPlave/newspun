@@ -32,5 +32,22 @@
     ["amplified", 1],
     ["immune", 1]
       ]
+},
+{
+  "source": "Fox News",
+    "begin_date": "2013, 11, 5",
+    "end_date": "2013,10,5",
+    "frequencies": [
+      ["communist", 4],
+    ["leftist", 3],
+    ["ruining", 3],
+    ["rest", 2],
+    ["us", 2],
+    ["roadblocks", 2],
+    ["concept", 1],
+    ["traditions", 1],
+    ["amplified", 1],
+    ["immune", 1]
+      ]
 }
 ]

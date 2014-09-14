@@ -117,6 +117,9 @@
                 <div id="graph-legend">
 
                 </div>
+                <div id="graph-table">
+
+                </div>
                 <!-- <ul class="list-inline banner-social-buttons"> -->
                 <!--     <li> -->
                 <!--         <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a> -->
@@ -146,6 +149,37 @@
             <p>Original of the intro photo by <a href="https://www.flickr.com/photos/pranavbhatt/7324846936">Pranav Bhatt</a>. Design based on <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
         </div>
     </footer>
+    <script type="text/template" id="freq-template">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <% _(sources).each(function(words, source) { %>
+              <th class="caption" colspan="2"><%=source %></th>
+            <% }) %>
+          </tr>
+        </thead>
+        <tbody>
+          <tr colspan="<%=_.keys(sources).length %>">
+            <% _(sources).each(function(words, source) { %>
+              <th class="caption">Word
+              </th>
+              <th class="caption">Number
+              </th>
+            <% }) %>
+            <% for(var i = 0; i < _.values(sources)[0].length; i++) { %>
+            <tr>
+            <% _(sources).each(function(words, source) { %>
+              <th><%=words[i].className %>
+              </th>
+              <th style="text-align:right;"><%=words[i].value %>
+              </th>
+            <% }) %>
+            </tr>
+            <% } %>
+          </tr>
+        </tbody>
+      </table>
+    </script>
 
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>

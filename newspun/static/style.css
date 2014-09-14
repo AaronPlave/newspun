@@ -478,3 +478,11 @@ span.twitter-typeahead {
   height: 50px;
   margin: 10px;
 }
+.caption {
+  text-align: center;
+  background: rgba(255,255,255,0.15);
+}
+thead th {
+  font-size: 1.2em;
+  background: rgba(255,255,255,0.3) !important;
+}
