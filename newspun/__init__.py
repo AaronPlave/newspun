@@ -30,6 +30,10 @@ def sources():
 # 	return api.handle_request(request)
 # 	# return api.hello1()
 
+@app.route('/force_populate_database_secret_key')
+def force_update():
+	t = threading.Thread(target=background_update)
+	t.start()
 
 @timer(1800)
 def update(args):
