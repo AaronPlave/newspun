@@ -239,14 +239,14 @@ def index():
 			selected_sources['BBC'] = {}
 		if 'FOXNews' not in selected_sources:
 			selected_sources['FOXNews'] = {}
-		
+
 		for article in selected_sources["CNN"]:
 			CNN += proximate.proximity(article["text"],input1,input2)
 		for each in selected_sources["HuffingtonPost"]:
 			HuffPost += proximate.proximity(article["text"],input1,input2)
 		for each in selected_sources["BBC"]:
 			BBC += proximate.proximity(article["text"],input1,input2)
-		for each in selected_sources["FOX"]:
+		for each in selected_sources["FOXNews"]:
 			FOX += proximate.proximity(article["text"],input1,input2)
 		return jsonify(CNN, HuffPost, BBC, FOX)
 
