@@ -232,14 +232,13 @@ def index():
 		BBC = 0
 		FOX = 0
 		for article in selected_sources[CNN]:
-			CNN += proximity(article["text"],input1,input2)
-			print CNN
+			CNN += proximate.proximity(article["text"],input1,input2)
 		for each in selected_sources[HuffPost]:
-			HuffPost += proximity(article["text"],input1,input2)
+			HuffPost += proximate.proximity(article["text"],input1,input2)
 		for each in selected_sources[BBC]:
-			BBC += proximity(article["text"],input1,input2)
+			BBC += proximate.proximity(article["text"],input1,input2)
 		for each in selected_sources[FOX]:
-			FOX += proximity(article["text"],input1,input2)
+			FOX += proximate.proximity(article["text"],input1,input2)
 		return jsonify(CNN, HuffPost, BBC, FOX)
 
 	selected.get("type")
