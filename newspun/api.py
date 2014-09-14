@@ -45,13 +45,13 @@ def index():
 		BBC = 0
 		FOX = 0
 		for article in selected_sources[CNN]:
-			CNN += article["words_count"][input1]
+			CNN += article["word_count"][input1]
 		for each in selected_sources[HuffPost]:
-			HuffPost += article["words_count"][input1]
+			HuffPost += article["word_count"][input1]
 		for each in selected_sources[BBC]:
-			BBC += article["words_count"][input1]
+			BBC += article["word_count"][input1]
 		for each in selected_sources[FOX]:
-			FOX += article["words_count"][input1]
+			FOX += article["word_count"][input1]
 		return jsonify(CNN, HuffPost, BBC, FOX)
 
 	elif type_of_analysis == 'common_words':
@@ -61,14 +61,14 @@ def index():
 		HuffPost = []
 		BBC = []
 		FOX = []
-		for each in selected_sources[CNN]:
-			CNN.append(common_words)
+		for article in selected_sources[CNN]:
+			CNN.append(article["common_words"])
 		for each in selected_sources[HuffPost]:
-			HuffPost.append(common_words)
+			HuffPost.append(article["common_words"])
 		for each in selected_sources[BBC]:
-			BBC.append(common_words)
+			BBC.append(article["common_words"])
 		for each in selected_sources[FOX]:
-			FOX.append(common_words)
+			FOX.append(article["common_words"])
 		if len(CNN) > 10:
 			CNN = sorted(CNN, key=lambda tup: tup[1])[::1]
 			CNN = CNN[:10]
@@ -92,17 +92,17 @@ def index():
 		countH = 0
 		countB = 0
 		countF = 0
-		for each in selected_sources[CNN]:
-			CNN += each.sentiment
+		for article in selected_sources[CNN]:
+			CNN += article["sentiment"]
 			countC += 1
 		for each in selected_sources[HuffPost]:
-			HuffPost += sentiment
+			HuffPost += article["sentiment"]
 			countH += 1
 		for each in selected_sources[BBC]:
-			BBC += sentiment
+			BBC += article["sentiment"]
 			countB += 1
 		for each in selected_sources[FOX]:
-			FOX += sentiment
+			FOX += article["sentiment"]
 			countF += 1
 		return jsonify((CNN/countC), (HuffPost/countH), (BBC/countB), (FOX/countF))
 
