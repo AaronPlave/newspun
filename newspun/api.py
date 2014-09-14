@@ -29,7 +29,7 @@ def index():
 	input1 = request.args.get('input1')
 	input2 = request.args.get('input2')
 	selected_sources = {}
-	if srcs:selected_sources[source].count()
+	if srcs:
 		for src in srcs:
 			selected_sources[src] = processed.find({'media_source':src})
 	else:
