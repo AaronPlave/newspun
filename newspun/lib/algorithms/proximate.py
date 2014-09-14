@@ -13,7 +13,7 @@ def proximity(text, word1, word2):
 			twoalone += 1
 		if (word1 in words) and (word2 in words):
 			count += 1
-	return (onealone, twoalone, count)
+	return [onealone, twoalone, count]
 
 # returns information
 #def 

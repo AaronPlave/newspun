@@ -226,10 +226,10 @@ def index():
 		return json.dumps(calculated_scores)
 
 	elif type_of_analysis == 'proximity':
-		CNN = (0,0,0)
-		HuffPost = (0,0,0)
-		BBC = (0,0,0)
-		FOX = (0,0,0)
+		CNN = [0,0,0]
+		HuffPost = [0,0,0]
+		BBC = [0,0,0]
+		FOX = [0,0,0]
 
 		if 'CNN' not in selected_sources:
 			selected_sources['CNN'] = {}
