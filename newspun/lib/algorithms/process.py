@@ -21,7 +21,7 @@ def analyze_all_items():
 def process(collection_item):
   text = collection_item['text']
   words = wordfreq.all_word_count(text)
-  common_words = wordfreq.most_common(text)
+  common_words = wordfreq.most_common_words(text)
   readability = GunningFog.count(text)
   types = tokenize_title(title)
   sentiment = sentiment_analysis.analyze_get_score(text,False)

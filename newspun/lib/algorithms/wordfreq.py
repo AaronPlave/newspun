@@ -6,6 +6,7 @@ from nltk.tokenize.punkt import PunktWordTokenizer
 from pymongo import MongoClient
 import re
 import json
+
 frequency = Blueprint('frequency',__name__,template_folder = 'templates')
 def add_article(text):
   text = re.sub('[-_.,\']','',text).lower()
@@ -24,10 +25,10 @@ def tokenize_title(text):
   return text
 
 
-@frequency.route('',methods = ['POST'])
+# @frequency.route('',methods = ['POST'])
 def all_word_count(text):
-  return jsonify(add_article(text))
+  return json.dumps(add_article(text))
 
-@frequency.route('')
-def most_common(limit = 10):
+# @frequency.route('')
+def most_common_words(text,limit = 10):
   jsonify(add_article(text).most_common(limit))
