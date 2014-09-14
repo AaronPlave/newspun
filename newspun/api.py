@@ -65,6 +65,10 @@ def index():
 		return jsonify({'ERROR':'NOT YET IMPLEMENTED'})	
 
 	elif type_of_analysis == 'readability':
+		"""
+		EXAMPLE
+		http://127.0.0.1:5000/api?sources=HuffingtonPost&type=readability
+		"""
 		print "Computing:",type_of_analysis
 		# print "Src",srcs
 		print "selected_sources",selected_sources
@@ -73,20 +77,22 @@ def index():
 		# print "ASD",selected_sources,type(selected_sources),selected_sources[selected_sources.keys()[0]]
 		for source in selected_sources.keys():
 			total = 0
-			print "SRC",source
-			print "VAL", selected_sources[source].count()
+			# print "SRC",source
+			# print "count", selected_sources[source].count()
 			for article in selected_sources[source]:
-				print article
-				avg += article['readability_score']
+				total += article['readability_score']
 
-			readability_score = float(total) / source.count() 
+			readability_score = float(total) / selected_sources[source].count()
+			print "Total",total
+			print "Num articles",selected_sources[source].count()
+			print "SCORE",readability_score
 			score_obj = {
-				'source':source[0]['media_source'],
+				'source':article['media_source'],
 				'readability_score':readability_score
 			}
 			calculated_scores.append(score_obj)
 		print "CALC SCORES:",calculated_scores
-		return jsonify(calculated_scores)
+		return json.dumps(calculated_scores)
 
 	elif type_of_query == 'proximity':
 
