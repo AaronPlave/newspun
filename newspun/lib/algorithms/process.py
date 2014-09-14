@@ -16,7 +16,9 @@ def analyze_all_items():
   items = raw_text.find()
   for each in items:
     process(each)
-    raw_text.remove(each)
+    
+  raw_text.drop()
+  print "Finished processing DB data"
 
 def process(collection_item):
   text = collection_item['text']
@@ -30,5 +32,6 @@ def process(collection_item):
   collection_item["readability_score"] = readability
   collection_item['sentiment'] = sentiment
   collection_item['tags'] = types
-  processed.insert(collection_item)
-  print "Finished processing DB data"
+  if processed.find(collection_item).count() == 0:
+    processed.insert(collection_item)
+  
