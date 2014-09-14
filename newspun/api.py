@@ -61,13 +61,22 @@ def index():
 		HuffPost = []
 		BBC = []
 		FOX = []
-		for article in selected_sources[CNN]:
+		if 'CNN' not in selected_sources:
+			selected_sources['CNN'] = {}
+		if 'HuffingtonPost' not in selected_sources:
+			selected_sources['HuffingtonPost'] = {}
+		if 'BBC' not in selected_sources:
+			selected_sources['BBC'] = {}
+		if 'FOXNews' not in selected_sources:
+			selected_sources['FOXNews'] = {}
+
+		for article in selected_sources['CNN']:
 			CNN.append(article["common_words"])
-		for each in selected_sources[HuffPost]:
+		for article in selected_sources['HuffingtonPost']:
 			HuffPost.append(article["common_words"])
-		for each in selected_sources[BBC]:
+		for article in selected_sources['BBC']:
 			BBC.append(article["common_words"])
-		for each in selected_sources[FOX]:
+		for article in selected_sources['FOXNews']:
 			FOX.append(article["common_words"])
 		if len(CNN) > 10:
 			CNN = sorted(CNN, key=lambda tup: tup[1])[::1]
@@ -81,7 +90,7 @@ def index():
 		if len(FOX) > 10:
 			FOX = sorted(FOX, key=lambda tup: tup[1])[::1]
 			FOX = FOX[:10]
-		return jsonify(CNN, HuffPost, BBC, FOX)
+		return jsonify({"CNN":CNN, "HuffingtonPost":HuffPost, "BBC":BBC, "FOXNews":FOX})
 
 	elif type_of_analysis == 'sentiment':
 		CNN = 0
