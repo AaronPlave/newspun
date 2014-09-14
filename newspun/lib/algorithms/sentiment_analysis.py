@@ -35,12 +35,12 @@ def add_append(t,hits,tally,l):
     tally.words = [t]
   return tally
 
-def analyze_get_score(phrase,need_score):
+def analyze_get_score(phrase,need_raw_score):
   tally = scored_words(0,0,[])
   tally = change_score(tally,phrase,True)
   tally = change_score(tally,phrase,False)
-  if(need_score):
-    return tally.score
+  if(need_raw_score):
+    return tally.score * -1
   else:
-    return tally.comparitave
+    return tally.comparitave * -1
 
