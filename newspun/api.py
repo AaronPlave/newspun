@@ -4,10 +4,10 @@ from flask import Blueprint
 from flask import request
 from pymongo import MongoClient
 from lib.algorithms import proximate
-
+import json
 
 client = MongoClient()
-db = client.newspindb
+db = client.newspundb
 processed = db.processed
 
 api = Blueprint('api',__name__,template_folder='templates')
@@ -21,17 +21,17 @@ api = Blueprint('api',__name__,template_folder='templates')
 @api.route("")
 def index():
 	print "REQ",request.args
-	srcs = request.args.get('sources')
-	print "SRCS:",srcs
+	srcs_str = request.args.get('sources')
+	srcs = srcs_str.split('?')
+	print "SRCS:",srcs		
 	type_of_analysis = request.args.get('type')
 	print "TYPE:",type_of_analysis
 	input1 = request.args.get('input1')
 	input2 = request.args.get('input2')
+	selected_sources = {}
 	if srcs:
-		selected_sources = []
 		for src in srcs:
-			selected = processed.find({'media_source':src})
-			selected_sources.append(selected)
+			selected_sources[src] = processed.find({'media_source':src})
 	else:
 		return jsonify({'ERROR':'NO DATA REQUESTED'})
 
@@ -51,18 +51,26 @@ def index():
 
 	elif type_of_analysis == 'readability':
 		print "Computing:",type_of_analysis
+		# print "Src",srcs
+		print "selected_sources",selected_sources
 		#average the readability over each source's respective articles
 		calculated_scores = []
-		for source in selected_sources:
+		# print "ASD",selected_sources,type(selected_sources),selected_sources[selected_sources.keys()[0]]
+		for source in selected_sources.keys():
 			total = 0
-			for article in source:
+			print "SRC",source
+			print "VAL", selected_sources[source].count()
+			for article in selected_sources[source]:
+				print article
 				avg += article['readability_score']
+
 			readability_score = float(total) / source.count() 
 			score_obj = {
 				'source':source[0]['media_source'],
 				'readability_score':readability_score
 			}
 			calculated_scores.append(score_obj)
+		print "CALC SCORES:",calculated_scores
 		return jsonify(calculated_scores)
 
 	elif type_of_query == 'proximity':
