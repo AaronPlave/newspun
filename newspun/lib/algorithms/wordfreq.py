@@ -7,7 +7,6 @@ from pymongo import MongoClient
 import re
 import json
 
-frequency = Blueprint('frequency',__name__,template_folder = 'templates')
 def add_article(text):
   text = re.sub('[-_.,\']','',text).lower()
   text = PunktWordTokenizer().tokenize(text)
