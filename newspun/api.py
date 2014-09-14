@@ -84,7 +84,27 @@ def index():
 		return jsonify(CNN, HuffPost, BBC, FOX)
 
 	elif type_of_analysis == 'sentiment':
-		return jsonify({'ERROR':'NOT YET IMPLEMENTED'})	
+		CNN = 0
+		HuffPost = 0
+		BBC = 0
+		FOX = 0
+		countC = 0
+		countH = 0
+		countB = 0
+		countF = 0
+		for each in selected_sources[CNN]:
+			CNN += sentiment
+			countC += 1
+		for each in selected_sources[HuffPost]:
+			HuffPost += sentiment
+			countH += 1
+		for each in selected_sources[BBC]:
+			BBC += sentiment
+			countB += 1
+		for each in selected_sources[FOX]:
+			FOX += sentiment
+			countF += 1
+		return jsonify((CNN/countC), (HuffPost/countH), (BBC/countB), (FOX/countF))
 
 	elif type_of_analysis == 'readability':
 		"""
