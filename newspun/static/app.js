@@ -113,14 +113,18 @@ var AppRouter = Backbone.Router.extend ({
           $.getJSON('/api?sources=' + sourceList + '&type=sentiment', function (data) {
             console.log(data);
           });
+          break;
         case 'readability':
           $.getJSON('/api?sources=' + sourceList + '&type=readability', function (data) {
             console.log(data);
+            readability(data);
           });
+          break;
         case 'proximity':
           $.getJSON('/api?sources=' + sourceList + '&type=proximity', function (data) {
             console.log(data);
           });
+          break;
         default:
           this.navigate('', {trigger: true});
 
