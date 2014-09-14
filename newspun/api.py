@@ -241,13 +241,25 @@ def index():
 			selected_sources['FOXNews'] = {}
 
 		for article in selected_sources["CNN"]:
-			CNN += proximate.proximity(article["text"],input1,input2)
+			new = proximate.proximity(article["text"],input1,input2)
+			CNN[0] += new[0]
+			CNN[1] += new[1]
+			CNN[2] += new[2]
 		for article in selected_sources["HuffingtonPost"]:
-			HuffPost += proximate.proximity(article["text"],input1,input2)
+			new = proximate.proximity(article["text"],input1,input2)
+			HuffPost[0] += new[0]
+			HuffPost[1] += new[1]
+			HuffPost[2] += new[2]
 		for article in selected_sources["BBC"]:
-			BBC += proximate.proximity(article["text"],input1,input2)
+			new = proximate.proximity(article["text"],input1,input2)
+			BBC[0] += new[0]
+			BBC[1] += new[1]
+			BBC[2] += new[2]
 		for article in selected_sources["FOXNews"]:
-			FOX += proximate.proximity(article["text"],input1,input2)
+			new = proximate.proximity(article["text"],input1,input2)
+			FOX[0] += new[0]
+			FOX[1] += new[1]
+			FOX[2] += new[2]
 		return jsonify({"CNN":CNN, "HuffingtonPost":HuffPost, "BBC":BBC, "FOXNews":FOX})
 
 	selected.get("type")
