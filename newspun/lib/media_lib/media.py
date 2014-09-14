@@ -20,10 +20,11 @@ def add_to_db(obj_to_insert,id_value):
 	if db.text.find({'id':id_value}).count() == 0:
 		db.text.insert(obj_to_insert)
 
+
+#TODO: Figure out time system and last_update
 class Media():
-	def __init__(self,sources,last_update,categories):
+	def __init__(self):
 		self.sources = ['HuffingtonPost','CNN','FOXNews','BBC']
-		self.last_update = last_update
 
 	def update_all():
 		"""
@@ -32,20 +33,36 @@ class Media():
 		for source in self.sources:
 			update_source(source)
 
-	def update_source(source):
+	def update_source(self,source):
 		if source == "HuffingtonPost":
-			huff = HuffingtonPost()
+			huff = HuffingtonPost(default_categories)
 			huff.fetch_articles()
 
 			# update the last update time
-			self.last_update = time.time()
+			last_update = time.time()
 
 		elif source == "CNN":
-			cnn = CNN()
+			cnn = CNN(default_categories)
 			cnn.fetch_articles()
 
 			# update the last update time
-			self.last_update = time.time()
+			last_update = time.time()
+
+		elif source == "FOXNews":
+			fox = FOXNews(default_categories)
+			fox.fetch_articles()
+
+			# update the last update time
+			last_update = time.time()
+
+		elif source == "BBC":
+			bbc = BBC(default_categories)
+			bbc.fetch_articles()
+
+			# update the last update time
+			last_update = time.time()
+		else:
+			print "Source:",source,"does not match any of the sources."
 
 TAG_RE = re.compile(r'<[^>]+>')
 def remove_tags(text):
@@ -101,7 +118,8 @@ class HuffingtonPost():
 				  'category':category,
 				  'date_published':pub_date,
 				  'text':scrubbed_text,
-				  'source_url':item.id
+				  'source_url':item.id,
+				  'media_source':"HuffingtonPost"
 				  }
 
 				add_to_db(a,item.id)
@@ -181,7 +199,8 @@ class CNN():
 					  'category':category,
 					  'date_published':pub_date,
 					  'text':scrubbed_text,
-					  'source_url':link
+					  'source_url':link,
+					  'media_source':"CNN"
 					}
 					add_to_db(a,item_id)
 					# if not db.text.find({'id':item.id}):
@@ -266,7 +285,8 @@ class BBC():
 					  'category':category,
 					  'date_published':pub_date,
 					  'text':scrubbed_text,
-					  'source_url':link
+					  'source_url':link,
+					  'media_source':"BBC"
 					}
 					add_to_db(a,item_id)
 					# if not db.text.find({'id':item.id}):
@@ -337,7 +357,8 @@ class FOXNews():
 					  'category':category,
 					  'date_published':pub_date,
 					  'text':scrubbed_text,
-					  'source_url':link
+					  'source_url':link,
+					  'media_source':"FOXNews"
 					}
 					add_to_db(a,item_id)
 				except:
