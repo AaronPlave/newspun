@@ -1,7 +1,7 @@
 import re
 import json
 import os
-
+#based on sentimental by thinkroth, optimized for Python by team Newspin
 json_data = open('words.json').read()
 lib = json.loads(json_data)
 
