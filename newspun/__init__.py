@@ -7,7 +7,6 @@ from lib.media_lib import media
 app = Flask(__name__)
 
 # Initialize blueprints
-app.register_blueprint(process,url_prefix = '/process')
 
 @app.route('/')
 def index():
