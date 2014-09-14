@@ -44,35 +44,67 @@ def index():
 		HuffPost = 0
 		BBC = 0
 		FOX = 0
-		for each in selected_sources[CNN]:
-			CNN += words[input1]
+		for article in selected_sources[CNN]:
+			CNN += article["word_count"][input1]
 		for each in selected_sources[HuffPost]:
-			HuffPost += words[input1]
+			HuffPost += article["word_count"][input1]
 		for each in selected_sources[BBC]:
-			BBC += words[input1]
+			BBC += article["word_count"][input1]
 		for each in selected_sources[FOX]:
-			FOX += words[input1]
+			FOX += article["word_count"][input1]
 		return jsonify(CNN, HuffPost, BBC, FOX)
 
-	# elif type_of_analysis == 'common_words':
-	# 	# results = [s['common_words'] for s in selected_sources
-	# 	# for each data source, grab text, analyze
-	# 	CNN = []
-	# 	HuffPost = []
-	# 	BBC = []
-	# 	FOX = []
-	# 	for each in selected_sources[CNN]:
-	# 		CNN.append(words[input1])
-	# 	for each in selected_sources[HuffPost]:
-	# 		HuffPost += words[input1]
-	# 	for each in selected_sources[BBC]:
-	# 		BBC += words[input1]
-	# 	for each in selected_sources[FOX]:
-	# 			FOX += words[input1]
-	# 	return jsonify(CNN, HuffPost, BBC, FOX)
+	elif type_of_analysis == 'common_words':
+		# results = [s['common_words'] for s in selected_sources
+		# for each data source, grab text, analyze
+		CNN = []
+		HuffPost = []
+		BBC = []
+		FOX = []
+		for article in selected_sources[CNN]:
+			CNN.append(article["common_words"])
+		for each in selected_sources[HuffPost]:
+			HuffPost.append(article["common_words"])
+		for each in selected_sources[BBC]:
+			BBC.append(article["common_words"])
+		for each in selected_sources[FOX]:
+			FOX.append(article["common_words"])
+		if len(CNN) > 10:
+			CNN = sorted(CNN, key=lambda tup: tup[1])[::1]
+			CNN = CNN[:10]
+		if len(HuffPost) > 10:
+			HuffPost = sorted(HuffPost, key=lambda tup: tup[1])[::1]
+			HuffPost = HuffPost[:10]
+		if len(BBC) > 10:
+			BBC = sorted(BBC, key=lambda tup: tup[1])[::1]
+			BBC = BBC[:10]
+		if len(FOX) > 10:
+			FOX = sorted(FOX, key=lambda tup: tup[1])[::1]
+			FOX = FOX[:10]
+		return jsonify(CNN, HuffPost, BBC, FOX)
 
 	elif type_of_analysis == 'sentiment':
-		return jsonify({'ERROR':'NOT YET IMPLEMENTED'})	
+		CNN = 0
+		HuffPost = 0
+		BBC = 0
+		FOX = 0
+		countC = 0
+		countH = 0
+		countB = 0
+		countF = 0
+		for article in selected_sources[CNN]:
+			CNN += article["sentiment"]
+			countC += 1
+		for each in selected_sources[HuffPost]:
+			HuffPost += article["sentiment"]
+			countH += 1
+		for each in selected_sources[BBC]:
+			BBC += article["sentiment"]
+			countB += 1
+		for each in selected_sources[FOX]:
+			FOX += article["sentiment"]
+			countF += 1
+		return jsonify((CNN/countC), (HuffPost/countH), (BBC/countB), (FOX/countF))
 
 	elif type_of_analysis == 'readability':
 		"""
@@ -89,6 +121,8 @@ def index():
 			total = 0
 			# print "SRC",source
 			# print "count", selected_sources[source].count()
+			if selected_sources[source].count() == 0:
+				continue
 			for article in selected_sources[source]:
 				total += article['readability_score']
 
@@ -105,8 +139,19 @@ def index():
 		return json.dumps(calculated_scores)
 
 	elif type_of_query == 'proximity':
-
-		pass
+		CNN = 0
+		HuffPost = 0
+		BBC = 0
+		FOX = 0
+		for article in selected_sources[CNN]:
+			CNN += proximity(text,input1,input2)
+		for each in selected_sources[HuffPost]:
+			HuffPost += proximity(text,input1,input2)
+		for each in selected_sources[BBC]:
+			BBC += proximity(text,input1,input2)
+		for each in selected_sources[FOX]:
+			FOX += proximity(text,input1,input2)
+		return jsonify(CNN, HuffPost, BBC, FOX)
 
 	selected.get("type")
 	return jsonify({"s":"b"})
