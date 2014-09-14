@@ -141,16 +141,15 @@ def index():
 		HuffPost = 0
 		BBC = 0
 		FOX = 0
-		for each in selected_sources[CNN]:
-			CNN += proximity(text)
+		for article in selected_sources[CNN]:
+			CNN += proximity(text,input1,input2)
 		for each in selected_sources[HuffPost]:
-			HuffPost += words[input1]
+			HuffPost += proximity(text,input1,input2)
 		for each in selected_sources[BBC]:
-			BBC += words[input1]
+			BBC += proximity(text,input1,input2)
 		for each in selected_sources[FOX]:
-			FOX += words[input1]
+			FOX += proximity(text,input1,input2)
 		return jsonify(CNN, HuffPost, BBC, FOX)
-		pass
 
 	selected.get("type")
 	return jsonify({"s":"b"})
