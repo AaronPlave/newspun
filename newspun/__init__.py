@@ -14,7 +14,11 @@ def index():
 
 @app.route('/sources')
 def sources():
-	return json.dumps(media.sources)
+  return json.dumps({
+  	'val': 'Huffington Post',
+  	'val': 'CNN', 
+  	'val':'FOX news',
+  	'val':'BBC'})
 
 @timer(3)
 def hello(signum):
