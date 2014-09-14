@@ -19,6 +19,15 @@ api = Blueprint('api',__name__,template_folder='templates')
 # proximity
 
 
+def tryDiv(a,b):
+	"""
+	Divides a/b if possible otherwise returns 0.
+	"""
+	try:
+		return float(a)/b
+	except:
+		return None
+
 @api.route("")
 def index():
 	print "REQ",request.args
@@ -125,19 +134,31 @@ def index():
 		countH = 0
 		countB = 0
 		countF = 0
-		for article in selected_sources[CNN]:
+
+		if 'CNN' not in selected_sources:
+			selected_sources['CNN'] = {}
+		if 'HuffingtonPost' not in selected_sources:
+			selected_sources['HuffingtonPost'] = {}
+		if 'BBC' not in selected_sources:
+			selected_sources['BBC'] = {}
+		if 'FOXNews' not in selected_sources:
+			selected_sources['FOXNews'] = {}
+
+		for article in selected_sources['CNN']:
 			CNN += article["sentiment"]
 			countC += 1
-		for each in selected_sources[HuffPost]:
+		for article in selected_sources['HuffingtonPost']:
 			HuffPost += article["sentiment"]
 			countH += 1
-		for each in selected_sources[BBC]:
+		for article in selected_sources['BBC']:
 			BBC += article["sentiment"]
 			countB += 1
-		for each in selected_sources[FOX]:
+		for article in selected_sources['FOXNews']:
 			FOX += article["sentiment"]
 			countF += 1
-		return jsonify((CNN/countC), (HuffPost/countH), (BBC/countB), (FOX/countF))
+
+		return jsonify({"CNN":tryDiv(CNN,countC), "HuffingtonPos":tryDiv(HuffPost,countH),
+			 "BBC":tryDiv(BBC,countB), "FOXNews":tryDiv(FOX,countF)})
 
 	elif type_of_analysis == 'readability':
 		"""
