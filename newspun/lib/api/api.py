@@ -15,4 +15,11 @@ def index():
   src = request.form.get('source')
   topic = request.form.get('topic')
   type_of_query = request.form.get('type')
-
+  if src:
+    selected = processed.find('media_source':src)
+  if topic:
+    selected = selected.find('tags':topic)
+  if not selcted:
+    return jsonify({'ERROR':'NO DATA REQUESTED'})
+  if type_of_query:
+    selected.get("type")
