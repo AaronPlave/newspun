@@ -124,11 +124,7 @@ var AppRouter = Backbone.Router.extend ({
         case 'sentiment':
           $.getJSON('/api?sources=' + sourceList + '&type=sentiment', function (data) {
             console.log(data);
-          });
-          break;
-        case 'sentiment':
-          $.getJSON('/api?sources=' + sourceList + '&type=sentiment', function (data) {
-            console.log(data);
+            sentiment(data);
           });
           break;
         case 'readability':
