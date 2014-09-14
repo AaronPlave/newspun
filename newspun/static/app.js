@@ -61,6 +61,7 @@ var AppRouter = Backbone.Router.extend ({
       // Intro route
       $('section').hide();
       $('#option-proximity').hide();
+      $('#option-occurrence').hide();
       $('.navbar-nav li').hide();
       $('.navbar-nav li:eq(0)').show();
       $('.selected').removeClass('selected');
@@ -74,6 +75,9 @@ var AppRouter = Backbone.Router.extend ({
 
       if(type === "proximity") {
         $('#option-proximity').show();
+      }
+      if(type === "occurrence") {
+        $('#option-occurrence').show();
       }
 
       $('section#sources').show();
@@ -95,6 +99,9 @@ var AppRouter = Backbone.Router.extend ({
       if(type === "proximity" && (words[0] === "" || words[1] === "")) {
         this.navigate('sources',{trigger: true});
       }
+      if(type === "occurrence" && $('#option-occurrence input').val() === "") {
+        this.navigate('sources',{trigger: true});
+      }
       // Graphs route
       $('section#graphs').show();
       $('.navbar-nav li:eq(2)').show();
@@ -109,6 +116,16 @@ var AppRouter = Backbone.Router.extend ({
             frequency(data, items);
           });
           break;
+        case 'occurrence':
+          $.getJSON('/api?sources=' + sourceList + '&type=unique_freq&input1=' + escape($('#option-occurrence input').val()), function (data) {
+            occurrence(data);
+          });
+          break;
+        case 'sentiment':
+          $.getJSON('/api?sources=' + sourceList + '&type=sentiment', function (data) {
+            console.log(data);
+          });
+          break;
         case 'sentiment':
           $.getJSON('/api?sources=' + sourceList + '&type=sentiment', function (data) {
             console.log(data);
@@ -116,7 +133,6 @@ var AppRouter = Backbone.Router.extend ({
           break;
         case 'readability':
           $.getJSON('/api?sources=' + sourceList + '&type=readability', function (data) {
-            console.log(data);
             readability(data);
           });
           break;

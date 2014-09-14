@@ -78,6 +78,7 @@
                         <p class="intro-text">Choose an analysis type to get started.</p>
                         <ul class="list-group">
                           <a href="#sources" data-code="freq"><li class="list-group-item">Word frequency</li></a>
+                          <a href="#sources" data-code="occurrence"><li class="list-group-item">Single word occurrence</li></a>
                           <a href="#sources" data-code="sentiment"><li class="list-group-item">Sentiment analysis</li></a>
                           <a href="#sources" data-code="readability"><li class="list-group-item">Readability index</li></a>
                           <a href="#sources" data-code="proximity"><li class="list-group-item">Proximity analysis</li></a>
@@ -102,6 +103,11 @@
                     <div id="option-proximity">
                       <p style="margin: 35px 0 10px;">Add the two words you want to proximity analysis for:</p>
                       <div><input type="text" class="option-input"></div>
+                      <div><input type="text" class="option-input"></div>
+                      <br>
+                    </div>
+                    <div id="option-occurrence">
+                      <p style="margin: 35px 0 10px;">Type the word you want to check:</p>
                       <div><input type="text" class="option-input"></div>
                       <br>
                     </div>
@@ -198,6 +204,7 @@
     <script src="/static/bootstrap-tagsinput.js"></script>
     <script src="/static/graph/frequency.js"></script>
     <script src="/static/graph/readability.js"></script>
+    <script src="/static/graph/occurrence.js"></script>
     <script src="/static/app.js"></script>
 
 </body>
