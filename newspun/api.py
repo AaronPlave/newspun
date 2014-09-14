@@ -44,14 +44,14 @@ def index():
 		HuffPost = 0
 		BBC = 0
 		FOX = 0
-		for each in selected_sources[CNN]:
-			CNN += words[input1]
+		for article in selected_sources[CNN]:
+			CNN += article["words_count"][input1]
 		for each in selected_sources[HuffPost]:
-			HuffPost += words[input1]
+			HuffPost += article["words_count"][input1]
 		for each in selected_sources[BBC]:
-			BBC += words[input1]
+			BBC += article["words_count"][input1]
 		for each in selected_sources[FOX]:
-			FOX += words[input1]
+			FOX += article["words_count"][input1]
 		return jsonify(CNN, HuffPost, BBC, FOX)
 
 	elif type_of_analysis == 'common_words':
@@ -93,7 +93,7 @@ def index():
 		countB = 0
 		countF = 0
 		for each in selected_sources[CNN]:
-			CNN += sentiment
+			CNN += each.sentiment
 			countC += 1
 		for each in selected_sources[HuffPost]:
 			HuffPost += sentiment
@@ -137,7 +137,19 @@ def index():
 		return json.dumps(calculated_scores)
 
 	elif type_of_query == 'proximity':
-
+		CNN = 0
+		HuffPost = 0
+		BBC = 0
+		FOX = 0
+		for each in selected_sources[CNN]:
+			CNN += proximity(text)
+		for each in selected_sources[HuffPost]:
+			HuffPost += words[input1]
+		for each in selected_sources[BBC]:
+			BBC += words[input1]
+		for each in selected_sources[FOX]:
+			FOX += words[input1]
+		return jsonify(CNN, HuffPost, BBC, FOX)
 		pass
 
 	selected.get("type")
