@@ -248,7 +248,7 @@ def index():
 			BBC += proximate.proximity(article["text"],input1,input2)
 		for each in selected_sources["FOXNews"]:
 			FOX += proximate.proximity(article["text"],input1,input2)
-		return jsonify(CNN, HuffPost, BBC, FOX)
+		return jsonify({"CNN":CNN, "HuffingtonPost":HuffPost, "BBC":BBC, "FOXNews":FOX})
 
 	selected.get("type")
 	return jsonify({"s":"b"})
