@@ -38,20 +38,33 @@ def index():
 	if not selected_sources:
 		return jsonify({'ERROR':'NO DATA REQUESTED'})
 	
-	if type_of_query == 'freq':
+	#algs switches
+	if type_of_query == 'unique_freq':
+		return jsonify({'ERROR':'NOT YET IMPLEMENTED'})
+
+	elif type_of_query == 'common_words':
 		
 		# results = [s['common_words'] for s in selected_sources
 		# for each data source, grab text, analyze
-		return jsonify({'ERROR':'NOT YET IMPLEMENTED'})	
+		return jsonify({'ERROR':'NOT YET IMPLEMENTED'})		
 	elif type_of_query == 'sentiment':
-		pass
+		return jsonify({'ERROR':'NOT YET IMPLEMENTED'})	
+
 	elif type_of_query == 'readability':
+		print "Computing:",type_of_query
 		#average the readability over each source's respective articles
-		for source in selected selected_sources:
-			avg = 0
+		calculated_scores = []
+		for source in selected_sources:
+			total = 0
 			for article in source:
 				avg += article['readability_score']
-			
+			readability_score = float(total) / source.count() 
+			score_obj = {
+				'source':source[0]['media_source'],
+				'readability_score':readability_score
+			}
+			calculated_scores.append(score_obj)
+		return jsonify(calculated_scores)
 
 	elif type_of_query == 'proximity':
 
