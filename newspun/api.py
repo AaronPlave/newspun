@@ -38,7 +38,7 @@ def index():
 	if not selected_sources:
 		return jsonify({'ERROR':'NO DATA REQUESTED'})
 	
-	algs switches
+	#algs switches
 	if type_of_analysis == 'unique_freq':
 		CNN = 0
 		HuffPost = 0
