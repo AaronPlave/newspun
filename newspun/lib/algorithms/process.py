@@ -12,15 +12,16 @@ raw_text = db.text
 processed = db.processed
 
 
-def analize_all_items():
+def analyze_all_items():
   items = raw_text.find()
   for each in items:
     process(each)
     raw_text.remove(each)
+
 def process(collection_item):
   text = collection_item['text']
-  words = frequency.all_word_count(text)
-  common_words = frequency.most_common(text)
+  words = wordfreq.all_word_count(text)
+  common_words = wordfreq.most_common(text)
   readability = GunningFog.count(text)
   types = tokenize_title(title)
   sentiment = sentiment_analysis.analyze_get_score(text,False)

@@ -1,5 +1,7 @@
 import re
 import json
+import os
+
 json_data = open('words.json').read()
 lib = json.loads(json_data)
 
