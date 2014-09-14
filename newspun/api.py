@@ -230,6 +230,16 @@ def index():
 		HuffPost = 0
 		BBC = 0
 		FOX = 0
+
+		if 'CNN' not in selected_sources:
+			selected_sources['CNN'] = {}
+		if 'HuffingtonPost' not in selected_sources:
+			selected_sources['HuffingtonPost'] = {}
+		if 'BBC' not in selected_sources:
+			selected_sources['BBC'] = {}
+		if 'FOXNews' not in selected_sources:
+			selected_sources['FOXNews'] = {}
+		
 		for article in selected_sources["CNN"]:
 			CNN += proximate.proximity(article["text"],input1,input2)
 		for each in selected_sources["HuffingtonPost"]:
