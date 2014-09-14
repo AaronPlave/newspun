@@ -9,7 +9,7 @@ db = client.newspindb
 processed = db.processed
 
 api = Blueprint('api',__name__,template_folder = 'templates')
-
+#joomy passes the source, topics, type
 @analyze.route('')
 def index():
   if request.form.get('source'):
