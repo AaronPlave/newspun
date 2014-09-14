@@ -16,6 +16,7 @@ def analize_all_items():
   items = raw_text.find()
   for each in items:
     process(each)
+    raw_text.remove(each)
 def process(collection_item):
   text = collection_item['text']
   words = frequency.all_word_count(text)
