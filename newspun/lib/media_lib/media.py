@@ -29,7 +29,7 @@ class Media():
 	def __init__(self):
 		self.sources = sources
 
-	def update_all():
+	def update_all(self):
 		"""
 		Updates all news sources and adds them to the db
 		"""

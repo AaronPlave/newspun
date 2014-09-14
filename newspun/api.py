@@ -29,7 +29,7 @@ def index():
 	input1 = request.args.get('input1')
 	input2 = request.args.get('input2')
 	selected_sources = {}
-	if srcs:
+	if srcs:selected_sources[source].count()
 		for src in srcs:
 			selected_sources[src] = processed.find({'media_source':src})
 	else:
@@ -121,6 +121,8 @@ def index():
 			total = 0
 			# print "SRC",source
 			# print "count", selected_sources[source].count()
+			if selected_sources[source].count() == 0:
+				continue
 			for article in selected_sources[source]:
 				total += article['readability_score']
 
