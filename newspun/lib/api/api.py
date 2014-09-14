@@ -12,10 +12,7 @@ api = Blueprint('api',__name__,template_folder = 'templates')
 #joomy passes the source, topics, type
 @analyze.route('')
 def index():
-  if request.form.get('source'):
-    if not request.form.get('catagory'):
-      processed.find({'source':request.form.get('source')})
-    else:
-      processed.find({'source':request.form.get('source')})
-  if request.form.get('catagory'):
+  src = request.form.get('source')
+  topic = request.form.get('topic')
+  type_of_query = request.form.get('type')
 
