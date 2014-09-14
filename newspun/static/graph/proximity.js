@@ -1,5 +1,4 @@
-var proximity = function(data) {
-  data = [{caption: "Something", number: 7},{caption: "Else", number: 5}];
+var proximity = function(data, source) {
   var width = 750,
       height = 400,
       radius = Math.min(width, height) / 2;
@@ -47,6 +46,5 @@ var proximity = function(data) {
       .attr("fill", "white")
       .style("text-anchor", "middle")
       .style("font-size", "20px")
-      .text("CNN");
-
+      .text(source);
 };

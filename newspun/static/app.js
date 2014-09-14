@@ -133,9 +133,15 @@ var AppRouter = Backbone.Router.extend ({
           });
           break;
         case 'proximity':
-          $.getJSON('/api?sources=' + sourceList + '&type=proximity', function (data) {
+          $.getJSON('/api?sources=' + sourceList + '&type=proximity&input1=' + words[0] + '&input2=' + words[1], function (data) {
             console.log(data);
-            proximity(data);
+            _(data).each(function (value, key) {
+              proximity([
+                {caption: "First word alone", number: value[0]},
+                {caption: "Second word alone", number: value[1]},
+                {caption: "Together", number: value[2]},
+              ], key);
+            });
           });
           break;
         default:
