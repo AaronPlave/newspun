@@ -7,7 +7,6 @@ from pymongo import MongoClient
 import re
 import json
 
-frequency = Blueprint('frequency',__name__,template_folder = 'templates')
 def add_article(text):
   text = re.sub('[-_.,\']','',text).lower()
   text = PunktWordTokenizer().tokenize(text)
@@ -16,6 +15,7 @@ def add_article(text):
     if f in freq:
       del freq[f]
   return freq
+
 def tokenize_title(text):
   text = re.sub('[.]','',text)
   text = PunktWordTokenizer().tokenize(text)
@@ -31,4 +31,8 @@ def all_word_count(text):
 
 # @frequency.route('')
 def most_common_words(text,limit = 10):
-  jsonify(add_article(text).most_common(limit))
+  articles = add_article(text)
+  if limit > len(articles):
+    limit = len(articles)-1
+
+  return json.dumps(add_article(text).items()[0:limit])

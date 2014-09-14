@@ -23,11 +23,12 @@ def process(collection_item):
   words = wordfreq.all_word_count(text)
   common_words = wordfreq.most_common_words(text)
   readability = GunningFog.count(text)
-  types = tokenize_title(title)
+  types = wordfreq.tokenize_title(collection_item['title'])
   sentiment = sentiment_analysis.analyze_get_score(text,False)
   collection_item["word_count"] = words
   collection_item["common_words"] = common_words
-  collection_item["readability_score"] = readabilitiy
+  collection_item["readability_score"] = readability
   collection_item['sentiment'] = sentiment
   collection_item['tags'] = types
   processed.insert(collection_item)
+  print "Finished processing DB data"
