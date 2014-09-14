@@ -39,8 +39,23 @@ def index():
 		return jsonify({'ERROR':'NO DATA REQUESTED'})
 	
 	#algs switches
-	if type_of_analysis == 'unique_freq':
-		return jsonify({'ERROR':'NOT YET IMPLEMENTED'})
+	# if type_of_analysis == 'unique_freq':
+	# 	CNN = 0
+	# 	HuffPost = 0
+	# 	BBC = 0
+	# 	FOX = 0
+	# 	for each in processed:
+	# 		if 'source':source[0]['media_source'] == CNN:
+	# 			CNN += words[input1]
+	# 		elif 'source':source[0]['media_source'] == HuffingtonPost:
+	# 			HuffPost += words[input1]
+	# 		elif 'source':source[0]['media_source'] == BBC:
+	# 			BBC += words[input1]
+	# 		elif 'source':source[0]['media_source'] == FOX:
+	# 			FOX += words[input1]
+	# 		else:
+	# 			print "Invalid Source"
+	# 	return jsonify(CNN, HuffPost, BBC, FOX)
 
 	elif type_of_analysis == 'common_words':
 		# results = [s['common_words'] for s in selected_sources
