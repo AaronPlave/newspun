@@ -41,6 +41,9 @@ def index():
 	
 	#algs switches
 	if type_of_analysis == 'unique_freq':
+		"""
+		http://127.0.0.1:5000/api?sources=HuffingtonPost?BBC&type=unique_freq&input1=isis
+		"""
 		CNN = 0
 		HuffPost = 0
 		BBC = 0
