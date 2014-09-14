@@ -13,6 +13,20 @@ $(window).scroll(function() {
 
 // jQuery for page scrolling feature - requires jQuery Easing plugin
 $.getJSON('/sources', function(sources) {
+  sources = [
+      {
+      val: "Huffington Post"
+      },
+      {
+      val: "CNN"
+      },
+      {
+      val: "FOX News"
+      },
+      {
+      val: "BBC"
+      }
+    ];
   console.log(sources);
   var engine = new Bloodhound({
     name: 'sources',
