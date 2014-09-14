@@ -11,7 +11,6 @@ db = client.newspundb
 raw_text = db.text
 processed = db.processed
 
-process = Blueprint('process',__name__,template_folder='templates')
 
 def analize_all_items():
   items = raw_text.find()
