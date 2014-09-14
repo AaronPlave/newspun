@@ -59,4 +59,10 @@ var frequency = function (raw, items) {
     return x.source;
   }));
   colorlegend("#graph-legend", oScale2, "ordinal", {boxHeight: 20, boxWidth:100});
+
+  // table generator
+  var tableData = _.groupBy(data.children, 'packageName');
+  console.log(tableData);
+  var rendered = _.template($('#freq-template').html(), {sources: tableData});
+  $('#graph-table').html(rendered);
 };
