@@ -8,7 +8,7 @@ client = MongoClient()
 db = client.newspindb
 processed = db.processed
 
-analyze = Blueprint('analyze',__name__,template_folder = 'templates')
+api = Blueprint('api',__name__,template_folder = 'templates')
 
 @analyze.route('')
 def index():
@@ -18,8 +18,4 @@ def index():
     else:
       processed.find({'source':request.form.get('source')})
   if request.form.get('catagory'):
-
-
-
-
 
