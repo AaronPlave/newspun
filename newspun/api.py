@@ -54,22 +54,34 @@ def index():
 			FOX += words[input1]
 		return jsonify(CNN, HuffPost, BBC, FOX)
 
-	# elif type_of_analysis == 'common_words':
-	# 	# results = [s['common_words'] for s in selected_sources
-	# 	# for each data source, grab text, analyze
-	# 	CNN = []
-	# 	HuffPost = []
-	# 	BBC = []
-	# 	FOX = []
-	# 	for each in selected_sources[CNN]:
-	# 		CNN.append(words[input1])
-	# 	for each in selected_sources[HuffPost]:
-	# 		HuffPost += words[input1]
-	# 	for each in selected_sources[BBC]:
-	# 		BBC += words[input1]
-	# 	for each in selected_sources[FOX]:
-	# 			FOX += words[input1]
-	# 	return jsonify(CNN, HuffPost, BBC, FOX)
+	elif type_of_analysis == 'common_words':
+		# results = [s['common_words'] for s in selected_sources
+		# for each data source, grab text, analyze
+		CNN = []
+		HuffPost = []
+		BBC = []
+		FOX = []
+		for each in selected_sources[CNN]:
+			CNN.append(common_words)
+		for each in selected_sources[HuffPost]:
+			HuffPost.append(common_words)
+		for each in selected_sources[BBC]:
+			BBC.append(common_words)
+		for each in selected_sources[FOX]:
+			FOX.append(common_words)
+		if len(CNN) > 10:
+			CNN = sorted(CNN, key=lambda tup: tup[1])[::1]
+			CNN = CNN[:10]
+		if len(HuffPost) > 10:
+			HuffPost = sorted(HuffPost, key=lambda tup: tup[1])[::1]
+			HuffPost = HuffPost[:10]
+		if len(BBC) > 10:
+			BBC = sorted(BBC, key=lambda tup: tup[1])[::1]
+			BBC = BBC[:10]
+		if len(FOX) > 10:
+			FOX = sorted(FOX, key=lambda tup: tup[1])[::1]
+			FOX = FOX[:10]
+		return jsonify(CNN, HuffPost, BBC, FOX)
 
 	elif type_of_analysis == 'sentiment':
 		return jsonify({'ERROR':'NOT YET IMPLEMENTED'})	
