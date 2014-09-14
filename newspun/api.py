@@ -226,10 +226,10 @@ def index():
 		return json.dumps(calculated_scores)
 
 	elif type_of_analysis == 'proximity':
-		CNN = 0
-		HuffPost = 0
-		BBC = 0
-		FOX = 0
+		CNN = (0,0,0)
+		HuffPost = (0,0,0)
+		BBC = (0,0,0)
+		FOX = (0,0,0)
 
 		if 'CNN' not in selected_sources:
 			selected_sources['CNN'] = {}
@@ -242,11 +242,11 @@ def index():
 
 		for article in selected_sources["CNN"]:
 			CNN += proximate.proximity(article["text"],input1,input2)
-		for each in selected_sources["HuffingtonPost"]:
+		for article in selected_sources["HuffingtonPost"]:
 			HuffPost += proximate.proximity(article["text"],input1,input2)
-		for each in selected_sources["BBC"]:
+		for article in selected_sources["BBC"]:
 			BBC += proximate.proximity(article["text"],input1,input2)
-		for each in selected_sources["FOXNews"]:
+		for article in selected_sources["FOXNews"]:
 			FOX += proximate.proximity(article["text"],input1,input2)
 		return jsonify({"CNN":CNN, "HuffingtonPost":HuffPost, "BBC":BBC, "FOXNews":FOX})
 
