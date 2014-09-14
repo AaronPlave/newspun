@@ -31,8 +31,10 @@ import GunningFog
 #			bins[2] = data
 #		else:
 
+# 'information' is selected sources for a specific source, call more than once if the user 
+# specifies more than one source
 
-def sentiment_time(information, sources):
+def sentiment_time(information):
 	now = datetime.datetime.now()
 	bins = [[],[],[],[],[],[]]
 	for article in information:
@@ -43,17 +45,17 @@ def sentiment_time(information, sources):
 		dif = nowtime - time
 		# separate into bins by half days
 		if dif < 12:
-			bins[0].append(sentiment_analysis.analyze_get_score(article.text,False))
+			bins[0].append(article["sentiment"])
 		elif dif < 24:
-			bins[1].append(sentiment_analysis.analyze_get_score(article.text,False))
+			bins[1].append(article["sentiment"])
 		elif dif < 36:
-			bins[2].append(sentiment_analysis.analyze_get_score(article.text,False))
+			bins[2].append(article["sentiment"])
 		elif dif < 48:
-			bins[3].append(sentiment_analysis.analyze_get_score(article.text,False))
+			bins[3].append(article["sentiment"])
 		elif dif < 60:
-			bins[4].append(sentiment_analysis.analyze_get_score(article.text,False))
+			bins[4].append(article["sentiment"])
 		else:
-			bins[5].append(sentiment_analysis.analyze_get_score(article.text,False))
+			bins[5].append(article["sentiment"])
 	datapoints = []
 	# make array of averagae sentiment score
 	for group in bins:
@@ -65,7 +67,10 @@ def sentiment_time(information, sources):
 		datapoints.append(total/count)
 	return datapoints
 
-def readability_time(information, sources):
+# 'information' is selected sources for a specific source, call more than once if the user 
+# specifies more than one source
+
+def readability_time(information):
 	now = datetime.datetime.now()
 	bins = [[],[],[],[],[],[]]
 	for article in information:
@@ -76,17 +81,17 @@ def readability_time(information, sources):
 		dif = nowtime - time
 		# separate into bins by half days
 		if dif < 12:
-			bins[0].append(GunningFog.count(article.text))
+			bins[0].append(article["readability_score"])
 		elif dif < 24:
-			bins[1].append(GunningFog.count(article.text))
+			bins[1].append(article["readability_score"])
 		elif dif < 36:
-			bins[2].append(GunningFog.count(article.text))
+			bins[2].append(article["readability_score"])
 		elif dif < 48:
-			bins[3].append(GunningFog.count(article.text))
+			bins[3].append(article["readability_score"])
 		elif dif < 60:
-			bins[4].append(GunningFog.count(article.text))
+			bins[4].append(article["readability_score"])
 		else:
-			bins[5].append(GunningFog.count(article.text))
+			bins[5].append(article["readability_score"])
 	datapoints = []
 	# make array of averagae readability score
 	for group in bins:
@@ -97,3 +102,40 @@ def readability_time(information, sources):
 			count += 1
 		datapoints.append(total/count)
 	return datapoints
+
+# 'information' is selected sources for a specific source, call more than once if the user 
+# specifies more than one source
+
+def proximity_time(information, input1, input2):
+	now = datetime.datetime.now()
+	bins = [[],[],[],[],[],[]]
+	for article in information:
+		# convert time into total number of hours
+		time = (article.year*8760)+(article.month*720)+(article.day*24)+(article.hour])
+		nowtime = (now.year*8760)+(now.month*720)+(now.day*24)+(now.hour)
+		# compute age of article in hours
+		dif = nowtime - time
+		# separate into bins by half days
+		if dif < 12:
+			bins[0].append(proximity(article["text"], input1, input2))
+		elif dif < 24:
+			bins[1].append(proximity(article["text"], input1, input2))
+		elif dif < 36:
+			bins[2].append(proximity(article["text"], input1, input2))
+		elif dif < 48:
+			bins[3].append(proximity(article["text"], input1, input2))
+		elif dif < 60:
+			bins[4].append(proximity(article["text"], input1, input2))
+		else:
+			bins[5].append(proximity(article["text"], input1, input2))
+	datapoints = []
+	# make array of averagae readability score
+	for group in bins:
+		total = 0
+		count = 0
+		for num in group:
+			total += num
+			count += 1
+		datapoints.append(total/count)
+	return datapoints
+
