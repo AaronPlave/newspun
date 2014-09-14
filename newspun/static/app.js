@@ -68,14 +68,21 @@ var goToSection = function () {
   }, 500, 'easeInOutExpo');
 };
 
+var cleanup = function () {
+  $('#graph-location').html('');
+  $('#graph-legend').html('');
+  $('#graph-legend').html('');
+};
+
 var AppRouter = Backbone.Router.extend ({
   routes: {
     '': function () {
       started = true;
       // Intro route
-      $('section').hide();
       $('#option-proximity').hide();
       $('#option-occurrence').hide();
+      cleanup();
+      $('section').hide();
       $('.navbar-nav li').hide();
       $('.navbar-nav li:eq(0)').show();
       $('.selected').removeClass('selected');
@@ -83,6 +90,9 @@ var AppRouter = Backbone.Router.extend ({
     'sources': function () {
       if(!started) {this.navigate('',{trigger:true});return;}
 
+      $('#option-proximity').hide();
+      $('#option-occurrence').hide();
+      cleanup();
       var type = $('header .selected').parent().data('code');
 
       // Sources route
@@ -101,6 +111,7 @@ var AppRouter = Backbone.Router.extend ({
       goToSection();
     },
     'graphs': function () {
+      cleanup();
       if(!started) {this.navigate('',{trigger:true});return;}
       var items = $('input:eq(0)').tagsinput('items');
       console.log(items);
