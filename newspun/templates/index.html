@@ -7,17 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Schema.org markup for Google+ -->
-    <meta itemprop="name" content="newspun">
+    <meta itemprop="name" content="newspin">
     <meta itemprop="description" content="It's not just news.">
     <meta itemprop="image" content="/static/icon.png">
 
     <!-- Open Graph data -->
-    <meta property="og:title" content="newspun" />
-    <meta property="og:url" content="http://newspun.co/" />
+    <meta property="og:title" content="newspin" />
+    <meta property="og:url" content="http://newspin.co/" />
     <meta property="og:image" content="/static/icon.png" />
     <meta property="og:description" content="It's not just news." />
-    <meta property="og:site_name" content="newspun" />
-    <title>newspun</title>
+    <meta property="og:site_name" content="newspin" />
+    <title>newspin</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/bootstrap-tagsinput.css" rel="stylesheet">
     <link href="/static/style.css" rel="stylesheet">
@@ -44,7 +44,7 @@
                     <i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand page-scroll" href="#page-top">
-                    <i class="fa fa-play-circle"></i>  <span class="light">new</span>spun
+                    <i class="fa fa-play-circle"></i>  <span class="light">news</span>pin
                 </a>
             </div>
 
@@ -56,7 +56,7 @@
                       <a href="#page-top">Analysis Type > </a>
                     </li>
                     <li>
-                    <a class="page-scroll" href="#sources">News Sources > </a>
+                    <a class="page-scroll" href="#sources">Options > </a>
                     </li>
                     <li>
                     <a class="page-scroll" href="#graphs">Graphs > </a>
@@ -74,11 +74,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <p class="intro-text"><b>newspun</b> is a web-app to see the analysis overview of news articles on various news sources.</p>
+                        <p class="intro-text"><b>newspin</b> is a web-app to see the analysis overview of news articles on various news sources.</p>
                         <p class="intro-text">Choose an analysis type to get started.</p>
                         <ul class="list-group">
                           <a href="#sources" data-code="freq"><li class="list-group-item">Word frequency</li></a>
-                          <a href="#sources" data-code="singleWord"><li class="list-group-item">Single word usage statistics</li></a>
                           <a href="#sources" data-code="sentiment"><li class="list-group-item">Sentiment analysis</li></a>
                           <a href="#sources" data-code="readability"><li class="list-group-item">Readability index</li></a>
                           <a href="#sources" data-code="proximity"><li class="list-group-item">Proximity analysis</li></a>
@@ -97,9 +96,15 @@
         <div class="sources-section">
             <div class="container">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <h2>News Sources</h2>
-                    <p>Add the news sources you want to compare.</p>
-                    <input type="text"><br>
+                    <h2>Options</h2>
+                    <p style="margin: 35px 0 10px;">Add the news sources you want to compare.</p>
+                    <input type="text" id="typeahead"><br>
+                    <div id="option-proximity">
+                      <p style="margin: 35px 0 10px;">Add the two words you want to proximity analysis for:</p>
+                      <div><input type="text" class="option-input"></div>
+                      <div><input type="text" class="option-input"></div>
+                      <br>
+                    </div>
                     <a href="#graphs" class="btn btn-default btn-lg">Show Graphs</a>
                 </div>
             </div>

@@ -45,19 +45,32 @@ def index():
 		BBC = 0
 		FOX = 0
 		for each in selected_sources[CNN]:
-				CNN += words[input1]
+			CNN += words[input1]
 		for each in selected_sources[HuffPost]:
-				HuffPost += words[input1]
+			HuffPost += words[input1]
 		for each in selected_sources[BBC]:
-				BBC += words[input1]
+			BBC += words[input1]
 		for each in selected_sources[FOX]:
-				FOX += words[input1]
+			FOX += words[input1]
 		return jsonify(CNN, HuffPost, BBC, FOX)
 
-	elif type_of_analysis == 'common_words':
-		# results = [s['common_words'] for s in selected_sources
-		# for each data source, grab text, analyze
-		return jsonify({'ERROR':'NOT YET IMPLEMENTED'})		
+	# elif type_of_analysis == 'common_words':
+	# 	# results = [s['common_words'] for s in selected_sources
+	# 	# for each data source, grab text, analyze
+	# 	CNN = []
+	# 	HuffPost = []
+	# 	BBC = []
+	# 	FOX = []
+	# 	for each in selected_sources[CNN]:
+	# 		CNN.append(words[input1])
+	# 	for each in selected_sources[HuffPost]:
+	# 		HuffPost += words[input1]
+	# 	for each in selected_sources[BBC]:
+	# 		BBC += words[input1]
+	# 	for each in selected_sources[FOX]:
+	# 			FOX += words[input1]
+	# 	return jsonify(CNN, HuffPost, BBC, FOX)
+
 	elif type_of_analysis == 'sentiment':
 		return jsonify({'ERROR':'NOT YET IMPLEMENTED'})	
 
