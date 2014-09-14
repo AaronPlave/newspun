@@ -98,35 +98,43 @@ def index():
 			for tup in article["common_words"]:
 				if CNN == []:
 					CNN += tup
-				elif anything[0] in CNN == tup[0]:
-					CNN += (tup[0], tup[1] + anything[1])
 				else:
-					CNN += tup
+					for anything in CNN:
+						if anything[0] == tup[0]:
+							CNN += (tup[0], tup[1] + anything[1])
+						else:
+							CNN += tup
 		for article in selected_sources['HuffingtonPost']:
 			for article in selected_sources['HuffingtonPost']:
 				for tup in article["common_words"]:
 					if HuffPost == []:
 						HuffPost += tup
-					elif anything[0] in HuffPost == tup[0]:
-						HuffPost += (tup[0], tup[1] + anything[1])
 					else:
-						HuffPost += tup
+						for anything in HuffPost:
+							if anything[0] == tup[0]:
+								HuffPost += (tup[0], tup[1] + anything[1])
+							else:
+								HuffPost += tup
 		for article in selected_sources['BBC']:
 			for tup in article["common_words"]:
 				if BBC == []:
 					BBC += tup
-				elif anything[0] in BBC == tup[0]:
-					BBC += (tup[0], tup[1] + anything[1])
 				else:
-					BBC += tup
+					for anything in BBC:
+						if anything[0] == tup[0]:
+							BBC += (tup[0], tup[1] + anything[1])
+						else:
+							BBC += tup
 		for article in selected_sources['FOXNews']:
 			for tup in article["common_words"]:
 				if FOX == []:
 					FOX += tup
-				elif anything[0] in FOX == tup[0]:
-					GOX += (tup[0], tup[1] + anything[1])
 				else:
-					FOX += tup
+					for anything in FOX:
+						if anything[0] == tup[0]:
+							FOX += (tup[0], tup[1] + anything[1])
+						else:
+							FOX += tup
 		if len(CNN) > 10:
 			CNN = sorted(CNN, key=lambda tup: tup[1])[::1]
 			CNN = CNN[:10]
